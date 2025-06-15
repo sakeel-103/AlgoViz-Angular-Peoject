@@ -1047,117 +1047,118 @@ body {
 </div>
 
 <!-- chatbot script -->
- <!-- <script>
- document.addEventListener('DOMContentLoaded', function () {
-  const chatIcon = document.getElementById('chat-icon');
-  const chatbotContainer = document.getElementById('chatbot-container');
-  const closeChat = document.getElementById('close-chat');
-  const refreshChat = document.getElementById('refresh-chat');
-  const chatbotBody = document.getElementById('chatbot-body');
-  const chatbotInput = document.getElementById('chatbot-input');
+<!-- chatbot script -->
+<!-- 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const chatIcon = document.getElementById('chat-icon');
+    const chatbotContainer = document.getElementById('chatbot-container');
+    const closeChat = document.getElementById('close-chat');
+    const refreshChat = document.getElementById('refresh-chat');
+    const chatbotBody = document.getElementById('chatbot-body');
+    const chatbotInput = document.getElementById('chatbot-input');
 
-  const apiConfig = {
-    endpoint: "https://api.openai.com/v1/chat/completions",
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': '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' 
-    }
-  };
+    const apiConfig = {
+      endpoint: "https://api.openai.com/v1/chat/completions",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': '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'
+      }
+    };
 
-  let conversationHistory = [];
-  let chatbotInitialized = false;
+    let conversationHistory = [];
+    let chatbotInitialized = false;
 
-  chatIcon.addEventListener('click', function () {
-    chatbotContainer.classList.add('active');
+    chatIcon.addEventListener('click', function () {
+      chatbotContainer.classList.add('active');
+      if (!chatbotInitialized) {
+        setTimeout(() => {
+          showBotMessage("Hello! How can I help you today?");
+          chatbotInitialized = true;
+        }, 500);
+      }
+    });
 
-    if (!chatbotInitialized) {
+    closeChat.addEventListener('click', function () {
+      chatbotContainer.classList.remove('active');
+    });
+
+    refreshChat.addEventListener('click', function () {
+      chatbotBody.innerHTML = '';
+      conversationHistory = [];
       setTimeout(() => {
         showBotMessage("Hello! How can I help you today?");
-        chatbotInitialized = true;
-      }, 500);
-    }
-  });
+      }, 300);
+    });
 
-  closeChat.addEventListener('click', function () {
-    chatbotContainer.classList.remove('active');
-  });
-
-  refreshChat.addEventListener('click', function () {
-    chatbotBody.innerHTML = '';  
-    conversationHistory = [];
-
-    setTimeout(() => {
-      showBotMessage("Hello! How can I help you today?");
-    }, 300);
-  });
-  chatbotInput.addEventListener('keypress', function (e) {
-    if (e.key === 'Enter' && chatbotInput.value.trim() !== '') {
-      const userMessage = chatbotInput.value.trim();
-      showUserMessage(userMessage);
-      chatbotInput.value = '';
-      chatbotInput.disabled = true;
-      conversationHistory.push({ role: "user", content: userMessage });
-      fetchBotResponse();
-    }
-  });
-  async function fetchBotResponse() {
-    try {
-      const typingIndicator = document.createElement('div');
-      typingIndicator.className = 'typing-indicator';
-      typingIndicator.innerHTML = '<span></span><span></span><span></span>';
-      chatbotBody.appendChild(typingIndicator);
-      chatbotBody.scrollTop = chatbotBody.scrollHeight;
-
-      const response = await fetch(apiConfig.endpoint, {
-        method: 'POST',
-        headers: apiConfig.headers,
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo", 
-          messages: conversationHistory,
-          max_tokens: 100
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`);
+    chatbotInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter' && chatbotInput.value.trim() !== '') {
+        const userMessage = chatbotInput.value.trim();
+        showUserMessage(userMessage);
+        chatbotInput.value = '';
+        chatbotInput.disabled = true;
+        conversationHistory.push({ role: "user", content: userMessage });
+        fetchBotResponse();
       }
+    });
 
-      const data = await response.json();
-      typingIndicator.remove(); 
-      const botMessage = data.choices?.[0]?.message?.content || "Sorry, I couldn't process your request.";
-      conversationHistory.push({ role: "assistant", content: botMessage });
+    async function fetchBotResponse() {
+      try {
+        const typingIndicator = document.createElement('div');
+        typingIndicator.className = 'typing-indicator';
+        typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+        chatbotBody.appendChild(typingIndicator);
+        chatbotBody.scrollTop = chatbotBody.scrollHeight;
 
-      showBotMessage(botMessage);
-    } catch (error) {
-      console.error('Error fetching bot response:', error);
-      const typingIndicator = chatbotBody.querySelector('.typing-indicator');
-      if (typingIndicator) {
+        const response = await fetch(apiConfig.endpoint, {
+          method: 'POST',
+          headers: apiConfig.headers,
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: conversationHistory,
+            max_tokens: 100
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
         typingIndicator.remove();
+        const botMessage = data.choices?.[0]?.message?.content || "Sorry, I couldn't process your request.";
+        conversationHistory.push({ role: "assistant", content: botMessage });
+        showBotMessage(botMessage);
+      } catch (error) {
+        console.error('Error fetching bot response:', error);
+        const typingIndicator = chatbotBody.querySelector('.typing-indicator');
+        if (typingIndicator) {
+          typingIndicator.remove();
+        }
+        showBotMessage("Sorry, something went wrong. Try again later.");
+      } finally {
+        chatbotInput.disabled = false;
       }
-
-      showBotMessage("Sorry, something went wrong. Try again later.");
-    } finally {
-      chatbotInput.disabled = false; 
     }
-  }
 
-  function showBotMessage(message) {
-    const messageElement = document.createElement('div');
-    messageElement.className = 'message bot-message';
-    messageElement.innerHTML = message.replace(/\n/g, '<br>'); 
-    chatbotBody.appendChild(messageElement);
-    chatbotBody.scrollTop = chatbotBody.scrollHeight; 
-  }
+    function showBotMessage(message) {
+      const messageElement = document.createElement('div');
+      messageElement.className = 'message bot-message';
+      messageElement.innerHTML = message.replace(/\n/g, '<br>');
+      chatbotBody.appendChild(messageElement);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
 
-  function showUserMessage(message) {
-    const messageElement = document.createElement('div');
-    messageElement.className = 'message user-message';
-    messageElement.textContent = message;
-    chatbotBody.appendChild(messageElement);
-    chatbotBody.scrollTop = chatbotBody.scrollHeight; 
-  }
-});
+    function showUserMessage(message) {
+      const messageElement = document.createElement('div');
+      messageElement.className = 'message user-message';
+      messageElement.textContent = message;
+      chatbotBody.appendChild(messageElement);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+  });
 </script>
+-->
 
 <script>
   document
@@ -1165,7 +1166,7 @@ body {
     .addEventListener("click", function () {
       window.location.href = "./geminibot"; 
     });
-</script> -->
+</script> 
 
 <!-- Chatbot end here -->
   
