@@ -29,15 +29,16 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
 // ============ Server Startup ============
-// if (require.main === module) {
-//   const PORT = process.env.PORT || 5000;
-//   server.listen(PORT, () => {
-//     console.log(`Server running on port ${PORT}`);
-//   });
-// }
-
-// // For Vercel
-// module.exports = app;
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000
+})
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+        process.exit(1); // Exit if DB connection fails
+    });
 // ==================== END OF FILE ====================
 
 
