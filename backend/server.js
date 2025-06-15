@@ -1,7 +1,4 @@
 const express = require('express');
-// import { ReviewComponent } from './../frontend/src/app/components/reviews/reviews.component';
-// const express = require('express');
-// const mongoose = require('mongoose');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -28,17 +25,16 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
-// ============ Server Startup ============
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 5000
-})
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => {
-        console.error('MongoDB connection error:', err);
-        process.exit(1); // Exit if DB connection fails
-    });
+// ==================== SERVER STARTUP ====================
+// if (require.main === module) {
+//     const PORT = process.env.PORT || 5000;
+//     server.listen(PORT, () => {
+//         console.log(`Server running on port ${PORT}`);
+//     });
+// }
+
+// // Export for Vercel
+// module.exports = app;
 // ==================== END OF FILE ====================
 
 
