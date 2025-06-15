@@ -26,16 +26,24 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
 // ==================== SERVER STARTUP ====================
-// if (require.main === module) {
-//     const PORT = process.env.PORT || 5000;
-//     server.listen(PORT, () => {
-//         console.log(`Server running on port ${PORT}`);
-//     });
-// }
+// Start server only when running directly (not when imported)
+if (require.main === module) {
+    const PORT = process.env.PORT || 5000;
+    server.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
 
-// // Export for Vercel
-// module.exports = app;
-// ==================== END OF FILE ====================
+    // Graceful shutdown
+    process.on('SIGINT', async () => {
+        console.log('Shutting down gracefully...');
+        await mongoose.connection.close();
+        process.exit(0);
+    });
+}
+
+// Export for Vercel
+module.exports = app;
+// ==================== END OF VERCEL CONFIG ====================
 
 
 
@@ -336,13 +344,6 @@ app.delete('/api/feedback/:id', async (req, res) => {
 app.use((err, req, res, next) => {
     console.error('Unhandled error:', err);
     res.status(500).json({ message: 'Server error' });
-});
-const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-process.on('SIGINT', async () => {
-    console.log('Shutting down gracefully...');
-    await mongoose.connection.close();
-    process.exit(0);
 });
 
 // ======================Review Page =============================================
