@@ -28,6 +28,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
+
+
 // ================== Session middleware setup ===================
 app.use(session({
     secret: process.env.SESSION_SECRET || 'defaultSecret',
