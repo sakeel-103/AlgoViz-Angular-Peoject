@@ -28,6 +28,18 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
+// ============ Server Startup ============
+// if (require.main === module) {
+//   const PORT = process.env.PORT || 5000;
+//   server.listen(PORT, () => {
+//     console.log(`Server running on port ${PORT}`);
+//   });
+// }
+
+// // For Vercel
+// module.exports = app;
+// ==================== END OF FILE ====================
+
 
 
 // ================== Session middleware setup ===================
