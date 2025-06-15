@@ -1,7 +1,31 @@
-# General
-.DS_Store
-*.log
+# ========== CRITICAL SECURITY FILES ==========
+.env*
+!.env.example
+config/*.json
+*.key
+*.pem
+*.crt
+*.cert
+*.pub
+*credentials*
+*secrets*
+*config.local*
+jwt-secret.txt
+session-secret.txt
+firebase*.json
+serviceAccount.json
+
+# ========== DATABASE FILES ==========
+*.db
+*.sqlite
+*.dump
+mongod.log
+redis.conf
+database/backups/
+
+# ========== SERVER-SIDE CACHE/LOGS ==========
 logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -9,9 +33,19 @@ yarn-error.log*
 *.pid
 *.seed
 *.pid.lock
-*.swp
-*.swo
-*~
+
+# ========== RUNTIME FILES ==========
+node_modules/
+dist/
+build/
+.temp/
+.cache/
+.serverless/
+.awcache/
+.parcel-cache/
+
+# ========== IDE/SYSTEM FILES ==========
+.DS_Store
 .idea/
 .vscode/
 *.suo
@@ -19,130 +53,44 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
-.env
-.env.local
-.env.development
-.env.test
-.env.production
-.env*.local
-
-# Node.js
-node_modules/
-dist/
-.temp/
-.cache/
-.angular/
-.serverless/
-.awcache/
-.parcel-cache/
-
-# Angular specific
-/.angular/cache
-dist/
-aot/
-compiled/
-**/*.js.map
-**/*.js
-**/*.d.ts
-connect.lock
-coverage/
-libpeerconnection.log
-testem.log
-/typings
-
-# Dependency directories
-jspm_packages/
-bower_components/
-
-# IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/
-
-# System Files
+*.swp
+*.swo
+*~
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
 
-# Testing
+# ========== TESTING/COVERAGE ==========
 /coverage
 /test-results.xml
+/__pycache__/
 
-# Production
-build/
-.serverless/
+# ========== ADD THESE NEW PATTERNS ==========
+# Common secret file patterns
+*_secret
+*_token
+*_password
+*_api_key
+*_private_key
+connectionstrings.*
+appsettings.*.json
 
-# Debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.pyc
 
-# Local development
-*.local
-
-# Visual Studio Code
-.history/
-
-# Miscellaneous
-*.bak
-*.patch
-*.diff
-*.err
-*.orig
-*.rej
-*.swo
-*.swp
-*.vi
-*~
-*.sass-cache
-*.tmp
-*.user
+# Package files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
 *.zip
-tags
-/.vs
-/.vscode
-/.vscode-test
-/.yarn/cache
-/.yarn/unplugged
-/.yarn/build-state.yml
-/.yarn/install-state.gz
-.pnp.*
-
-# API Keys and sensitive data
-*.key
-*.pem
-*.crt
-*.cert
-*.pub
-config.json
-credentials.json
-secrets.json
-firebase.json
-firebase-debug.log
-firebase-debug.*.log
-
-# Editor directories and files
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
