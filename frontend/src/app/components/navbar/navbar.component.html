@@ -1,0 +1,64 @@
+<div class="navbar">
+  <div class="nav-left">
+    <p>ALGOVIZ</p>
+  </div>
+
+  <div class="hamburger" (click)="toggleMenu()">☰</div>
+
+  <div class="nav-right" [class.active]="isMenuOpen">
+    <div class="dropdown">
+      <a class="dropbtn" (click)="toggleVisualizationDropdown()"
+        >Visualization <i class="fa fa-caret-down"></i
+      ></a>
+      <div
+        class="dropdown-content"
+        [class.active]="isVisualizationDropdownOpen"
+      >
+        <a href="prims-algo">Prim's Algorithm</a>
+        <a href="/n-queen-visualizer">N-Queen's</a>
+        <a href="dijkstras-algo">Dijkstra's Algorithm</a>
+        <a href="warshall-algo">Warshall's algorithm</a>
+        <a href="/bfsPage">BFS Algorithm</a>
+        <a href="/dfsPage">DFS Algorithm</a>
+      </div>
+    </div>
+    <a class="nav-item" href="/faq">FAQ</a>
+    <a class="nav-item" href="/quiz">Quiz</a>
+    <a class="nav-item" href="/questions">Access Library</a>
+
+    <div class="profile-dropdown">
+      <img
+        src="https://as1.ftcdn.net/v2/jpg/07/77/92/08/1000_F_777920887_JNV7hglZmyROgiZjGb6x9DP4Qfu5gyg0.jpg"
+        alt="Profile"
+        class="profile-img"
+        (click)="toggleDropdown()"
+      />
+      <div class="dropdown-content" [class.active]="isDropdownOpen">
+        <a href="/dashboard" class="dropdown-item">Profile</a>
+        <a href="/mainIndex" class="dropdown-item">Home</a>
+        <a href="/aboutUs" class="dropdown-item">About Us</a>
+        <a href="/real-world" class="dropdown-item"
+          >Real World Graph Scenario</a
+        >
+        <a href="/contactUs" class="dropdown-item">ContactUs</a>
+        <a href="/compare" class="dropdown-item">Algo-Compare</a>
+        <a href="/" class="dropdown-item" (click)="onLogout()">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.embeddedChatbotConfig = {
+    chatbotId: "L51AYDMWE0tDQxPXKTgeX",
+    domain: "www.chatbase.co",
+  };
+  (function () {
+    var script = document.createElement("script");
+    script.src = "https://www.chatbase.co/embed.min.js";
+    script.setAttribute("chatbotId", "L51AYDMWE0tDQxPXKTgeX");
+    script.setAttribute("domain", "www.chatbase.co");
+    script.defer = true;
+    document.body.appendChild(script);
+  })();
+</script>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <title>AlgoViz</title>
+  </head>
+
+  <body>
+    <nav class="welcome-heading">
+      <div class="nav-left">
+        <p>ALGOVIZ</p>
+      </div>
+      <button
+        class="hamburger"
+        onclick="toggleMenu()"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+      <div class="nav-items">
+        <a class="nav-item" href="#">FAQ</a>
+        <a class="nav-item" href="#">Quiz</a>
+        <a class="nav-item" href="#">Practice Questions</a>
+        <a class="nav-item" href="#">Reviews</a>
+      </div>
+    </nav>
+
+    <!-- Signup form Start here -->
+    <div class="container">
+      <div class="box">
+        <div class="left">
+          <h1>Welcome to Sign-Up</h1>
+          <p>Already have an account?</p>
+          <a routerLink="/login" class="btn-outline">Login</a>
+        </div>
+
+        <!-- Right Section for Sign-Up Form -->
+        <div class="right">
+          <h2 class="form-title">Create Your Account</h2>
+          <button
+            type="button"
+            class="cross-button"
+            (click)="goHome()"
+            aria-label="Close form"
+          >
+            ×
+          </button>
+          <form [formGroup]="signupForm" id="signupForm" (ngSubmit)="SignUp()">
+            <div class="input-box">
+              <label for="username" class="visually-hidden"
+                >Enter your name</label
+              >
+              <i class="bx bxs-user"></i>
+              <input
+                type="text"
+                id="username"
+                placeholder="Enter your name"
+                formControlName="username"
+                required
+                aria-describedby="username-error"
+              />
+              <div
+                *ngIf="
+                  signupForm.get('username')?.invalid &&
+                  signupForm.get('username')?.touched
+                "
+                id="username-error"
+                class="error-message"
+              >
+                Please enter a valid username (minimum 3 characters).
+              </div>
+            </div>
+
+            <div class="input-box">
+              <label for="email" class="visually-hidden">Enter email</label>
+              <i class="bx bxs-envelope"></i>
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter email"
+                formControlName="email"
+                required
+                aria-describedby="email-error"
+              />
+              <div
+                *ngIf="
+                  signupForm.get('email')?.invalid &&
+                  signupForm.get('email')?.touched
+                "
+                id="email-error"
+                class="error-message"
+              >
+                Please enter a valid email address.
+              </div>
+            </div>
+
+            <!-- Password Input -->
+            <div class="input-box">
+              <label for="password" class="visually-hidden">Password</label>
+              <i class="bx bx-lock-alt"></i>
+              <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                formControlName="password"
+                [type]="passwordVisible ? 'text' : 'password'"
+                required
+                aria-describedby="password-error"
+              />
+              <i
+                class="bx toggle-icon"
+                [ngClass]="passwordVisible ? 'bx-show' : 'bx-hide'"
+                (click)="togglePasswordVisibility()"
+              ></i>
+              <div
+                *ngIf="
+                  signupForm.get('password')?.invalid &&
+                  signupForm.get('password')?.touched
+                "
+                id="password-error"
+                class="error-message"
+              >
+                Password must be at least 8 characters long.
+              </div>
+            </div>
+
+            <!-- Confirm Password Input -->
+            <div class="input-box">
+              <label for="confirmPassword" class="visually-hidden"
+                >Confirm Password</label
+              >
+              <i class="bx bx-lock-alt"></i>
+              <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm Password"
+                formControlName="confirmPassword"
+                [type]="confirmPasswordVisible ? 'text' : 'password'"
+                required
+                aria-describedby="confirmPassword-error"
+              />
+              <i
+                class="bx toggle-icon"
+                [ngClass]="confirmPasswordVisible ? 'bx-show' : 'bx-hide'"
+                (click)="toggleConfirmPasswordVisibility()"
+              ></i>
+              <div
+                *ngIf="
+                  signupForm.get('confirmPassword')?.invalid &&
+                  signupForm.get('confirmPassword')?.touched
+                "
+                id="confirmPassword-error"
+                class="error-message"
+              >
+                Please confirm your password.
+              </div>
+              <div
+                *ngIf="
+                  signupForm.get('confirmPassword')?.touched &&
+                  signupForm.get('password')?.value !==
+                    signupForm.get('confirmPassword')?.value
+                "
+                id="password-mismatch-error"
+                class="error-message"
+              >
+                Passwords do not match.
+              </div>
+            </div>
+
+            <button type="submit" class="btn">Sign Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      function toggleMenu() {
+        const navItems = document.querySelector(".nav-items");
+        const hamburger = document.querySelector(".hamburger");
+        const isExpanded = navItems.classList.toggle("active");
+        hamburger.setAttribute("aria-expanded", isExpanded);
+      }
+    </script>
+  </body>
+</html>

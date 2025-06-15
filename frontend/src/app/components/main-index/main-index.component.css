@@ -1,0 +1,118 @@
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #6c63ff 0%, #ff6584 100%);
+  color: #111;  
+  margin: 0;
+  padding: 0;
+  }
+  
+  
+  .container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 2rem;
+    margin-top: 40px;
+  }
+  
+  .back-button {
+    position: fixed; 
+    top: 100px;
+    left: 20px;
+    background: none;
+    border: none;
+    font-size: 30px; 
+    color: white; 
+    cursor: pointer;
+    z-index: 1000; 
+    font-weight: bold;
+  }
+  
+  .back-button:hover {
+    color: #ff4081; 
+  }
+  
+    .hero-section {
+  background: linear-gradient(180deg, #ff99cc, #9b59b6);
+  border-radius: 10px;
+  color: black;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 40px;
+  padding: 3rem;
+  }
+  
+    .hero-section .btn {
+  background-color: white;
+  color: #151515;
+  border-radius: 30px;
+  border: 1px solid #333;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .hero-section .btn:hover {
+  background-color: black;
+  color: white;
+  }
+  
+  
+  .hero-section h1{
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+  }
+  .hero-section p{
+    text-shadow: white;
+  }
+  
+  .hero-section .btn {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  }
+  
+    
+  
+    .content-box {
+      background: linear-gradient(180deg, #ff99cc, #9b59b6);
+      border-radius: 18px;
+      padding: 2rem;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+  
+    .content-box:hover {
+      transform: translateY(-5px);
+      box-shadow: black;
+    }
+  
+    .content-box h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+  
+    .content-box ul {
+      padding-left: 1.2rem;
+    }
+  
+    .additional-info {
+      background: linear-gradient(180deg, #ff99cc, #9b59b6);
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+  
+    .btn-dark {
+      border-radius: 30px;
+      transition: background-color 0.3s ease;
+      background-color: white;
+      color: #151515;
+    }
+  
+    .btn-dark:hover {
+      background-color: black;
+    }
+  
+    @media (max-width: 768px) {
+      .content-box {
+        margin-bottom: 1.5rem;
+      }
+    }
+  

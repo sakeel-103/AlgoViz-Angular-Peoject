@@ -1,0 +1,413 @@
+/* Host and container setup */
+:host {
+  display: block;
+  background: linear-gradient(135deg, #3498db, #9b59b6, #f39c12, #e74c3c);
+  min-height: 100vh;
+  padding: 1rem 0;
+}
+
+.back-button {
+  position: fixed;
+  top: 85px;
+  left: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+  font-weight: bold;
+}
+
+.back-button:hover {
+  color: #ff4081;
+}
+
+/* Question Bank Container */
+.question-bank-container {
+  max-width: 1500px;
+  margin: 90px auto 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+}
+
+/* Sidebar styling */
+.sidebar {
+  flex: 0 0 250px;
+  position: sticky;
+  top: 20px;
+  background: linear-gradient(135deg, #3498db, #f39c12);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  margin-right: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar:hover {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar h3 {
+  margin-bottom: 1rem;
+  color: #ecf0f1;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  cursor: pointer;
+  padding: 0.8rem 0;
+  color: #ecf0f1;
+  transition: color 0.3s ease, background-color 0.3s ease, padding-left 0.3s ease;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar li:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding-left: 1rem;
+  transform: translateX(10px);
+}
+
+.sidebar li.active {
+  color: #fff;
+  background-color: #2c3e50;
+  border-left: 5px solid #f39c12;
+}
+
+.sidebar li i {
+  margin-right: 10px;
+  font-size: 1.4rem;
+}
+
+/* Dropdown styling for mobile */
+.difficulty-select {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.difficulty-select:focus {
+  border-color: #9b59b6;
+  outline: none;
+}
+
+/* Content area */
+.content {
+  flex: 1;
+}
+
+/* Header Styles */
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: #3498db;
+  margin-bottom: 10px;
+}
+
+.intro {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+}
+
+/* Practice Your Skills Heading */
+.practice-heading {
+  font-size: 2rem;
+  color: #e74c3c;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease-in-out;
+}
+
+.practice-heading:hover {
+  color: #9b59b6;
+}
+
+/* Search Bar Styles */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 80%;
+  max-width: 500px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.search-input:focus {
+  border-color: #9b59b6;
+  outline: none;
+}
+
+/* Loading Indicator */
+.loading-indicator {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #9b59b6;
+  margin: 2rem 0;
+}
+
+/* Grid Setup */
+.question-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Question Card Styles */
+.question-card {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+}
+
+.question-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background-color: #f7f7f7;
+  border-color: #9b59b6;
+}
+
+/* Question Titles */
+.question-title {
+  font-size: 1.5rem;
+  color: #3498db;
+  margin: 0 0 10px;
+  transition: color 0.3s ease-in-out;
+}
+
+.question-title:hover {
+  color: #9b59b6;
+}
+
+/* Question Descriptions */
+.question-description {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* Start Solving Button */
+.start-solving-button {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #e74c3c;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.start-solving-button:hover {
+  background-color: #9b59b6;
+  transform: translateY(-2px);
+}
+
+/* Responsive Styles */
+
+/* Large Desktop (>1200px) */
+@media (min-width: 1201px) {
+  .question-bank-container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Desktop (769px–1200px) */
+@media (max-width: 1200px) {
+  .question-bank-container {
+    max-width: 100%;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .sidebar {
+    flex: 0 0 200px;
+  }
+
+  .question-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* Tablet (577px–768px) */
+@media (max-width: 768px) {
+  .question-bank-container {
+    flex-direction: row;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 15px;
+  }
+
+  .sidebar {
+    flex: 0 0 180px;
+    padding: 1rem;
+  }
+
+  .sidebar h3 {
+    font-size: 1.5rem;
+  }
+
+  .sidebar li {
+    font-size: 1rem;
+    padding: 0.6rem 0;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .intro {
+    font-size: 1rem;
+  }
+
+  .search-input {
+    width: 90%;
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .question-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+  }
+
+  .question-card {
+    padding: 15px;
+  }
+
+  .question-title {
+    font-size: 1.3rem;
+  }
+
+  .question-description {
+    font-size: 0.9rem;
+  }
+
+  .start-solving-button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile (≤576px) */
+@media (max-width: 576px) {
+  :host {
+    padding: 0.5rem 0;
+  }
+
+  .back-button {
+    top: 70px;
+    left: 10px;
+    font-size: 20px;
+  }
+
+  .question-bank-container {
+    flex-direction: column;
+    margin: 80px 10px 10px;
+    padding: 10px;
+  }
+
+  .sidebar {
+    flex: none;
+    width: 100%;
+    position: static;
+    margin-right: 0;
+    margin-bottom: 20px;
+    padding: 1rem;
+  }
+
+  .sidebar h3 {
+    font-size: 1.3rem;
+  }
+
+  .difficulty-select {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .intro {
+    font-size: 0.9rem;
+  }
+
+  .search-container {
+    margin-bottom: 15px;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 100%;
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .loading-indicator {
+    font-size: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .question-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    gap: 10px;
+  }
+
+  .question-card {
+    padding: 12px;
+  }
+
+  .question-title {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+
+  .question-description {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+  }
+
+  .start-solving-button {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+}

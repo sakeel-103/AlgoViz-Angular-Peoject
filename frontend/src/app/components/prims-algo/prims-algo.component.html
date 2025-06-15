@@ -1,0 +1,83 @@
+<app-navbar></app-navbar>
+
+<!-- Back Button at Top-Left -->
+<button
+  class="back-button"
+  (click)="goBack()"
+  aria-label="Go back to previous page"
+>
+  ←
+</button>
+
+<div class="container">
+  <h2>Prim's Algorithm Visualizer</h2>
+
+  <div class="controls">
+    <label>
+      Number of Nodes (5-15):
+      <input
+        type="number"
+        [(ngModel)]="numNodes"
+        min="5"
+        max="15"
+        (change)="generateGraph()"
+      />
+    </label>
+
+    <label>
+      Initial Node (0 to {{ numNodes - 1 }}):
+      <input
+        type="number"
+        [(ngModel)]="initialNode"
+        [min]="0"
+        [max]="numNodes - 1"
+      />
+    </label>
+
+    <button (click)="generateGraph()">Generate Graph</button>
+    <button (click)="handlePlayPause()">
+      {{ isPlaying ? "Pause" : "Play" }}
+    </button>
+  </div>
+
+  <div class="graph-container">
+    <div class="graph-section">
+      <h3>Original Graph</h3>
+      <div class="graph-visual">
+        <!-- Original graph visualization -->
+        <app-graph-canvas-wrapper
+          [graph]="graph"
+          [selectedNode]="selectedNode"
+          [showWeights]="showWeights"
+        >
+        </app-graph-canvas-wrapper>
+      </div>
+    </div>
+
+    <div class="graph-section">
+      <h3>Minimum Spanning Tree</h3>
+      <div class="mst-visual">
+        <!-- MST visualization Part-->
+        <app-graph-canvas-wrapper
+          [graph]="graph"
+          [mstEdges]="mstEdges"
+          [selectedEdge]="selectedEdge"
+          [selectedNode]="selectedNode"
+          [showWeights]="showWeights"
+        >
+        </app-graph-canvas-wrapper>
+      </div>
+    </div>
+  </div>
+
+  <p *ngIf="explanation" class="explanation">{{ explanation }}</p>
+
+  <ul class="steps">
+    <li
+      *ngFor="let step of steps; let i = index"
+      [class.selected]="i === currentStep - 1"
+    >
+      {{ step.explanation }}
+    </li>
+  </ul>
+</div>

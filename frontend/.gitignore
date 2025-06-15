@@ -1,0 +1,85 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files
+
+######################
+# Compiled Output
+######################
+/dist
+/tmp
+/out-tsc
+/bazel-out
+/.angular/cache
+
+######################
+# Dependencies
+######################
+/node_modules
+/.pnpm-store
+/.yarn/cache
+/.yarn/unplugged
+/.yarn/build-state.yml
+/.yarn/install-state.gz
+.pnp.*
+
+######################
+# Environment
+######################
+.env
+.env.local
+.env.*.local
+*.env
+
+######################
+# Logs
+######################
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+firebase-debug.log
+libpeerconnection.log
+testem.log
+
+######################
+# Testing
+######################
+/coverage
+/test-results.xml
+/karma-report.xml
+
+######################
+# IDEs
+######################
+.idea/
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+*.code-workspace
+
+######################
+# System Files
+######################
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+######################
+# Angular Specific
+######################
+/aot
+/compiled
+*.js.map
+*.js
+*.d.ts
+connect.lock
+/typings
+
+######################
+# Editor Files
+######################
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

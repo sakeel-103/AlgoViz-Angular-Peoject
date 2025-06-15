@@ -1,0 +1,218 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="user-profile">
+        <i class="fas fa-user"></i>
+        <span>{{ username }}</span>
+      </div>
+      <!-- <i class="fas fa-chevron-right"></i> -->
+    </div>
+
+    <nav class="sidebar-nav">
+      <a
+        href="javascript:void(0)"
+        class="nav-item"
+        (click)="openChangeNameModal()"
+      >
+        <i class="fas fa-user-edit"></i>
+        <span>Change Name</span>
+      </a>
+      <a
+        href="javascript:void(0)"
+        class="nav-item"
+        (click)="openChangePasswordModal()"
+      >
+        <i class="fas fa-lock"></i>
+        <span>Change Password</span>
+      </a>
+      <a
+        href="javascript:void(0)"
+        class="nav-item"
+        (click)="openDeleteAccountModal()"
+      >
+        <i class="fas fa-trash-alt"></i>
+        <span>Delete My Account</span>
+      </a>
+      <a href="javascript:void(0)" class="nav-item">
+        <i class="fas fa-question-circle"></i>
+        <span>Help</span>
+      </a>
+      <a href="javascript:void(0)" class="nav-item">
+        <i class="fas fa-phone-alt"></i>
+        <span>Contact Us</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="onLogout()">Logout</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <nav class="navbar">
+      <h2>Welcome to your Profile, {{ username }}</h2>
+    </nav>
+    <section class="content">
+      <div class="dashboard-options">
+        <p>Welcome to your Profile! Use the sidebar to manage your account.</p>
+      </div>
+      <div class="algorithm-visualization-section">
+        <h3>Algorithm Visualization Tool</h3>
+        <div class="visualization-controls">
+          <label for="algorithmSelect">Select Algorithm:</label>
+          <select id="algorithmSelect" name="algorithm">
+            <option value="binarySearch">Prim's Algorithm</option>
+            <option value="quickSort">Dijkstra's Algorithm</option>
+            <option value="dijkstra">Floyd-Warshall</option>
+          </select>
+
+          <label for="inputData">Input Data (comma-separated):</label>
+          <input
+            type="text"
+            id="inputData"
+            name="inputData"
+            placeholder="e.g., 5, 2, 8, 1, 9"
+          />
+
+          <label for="speed">Animation Speed (ms):</label>
+          <input
+            type="number"
+            id="speed"
+            name="speed"
+            min="100"
+            max="2000"
+            value="500"
+          />
+
+          <button class="run-btn">Run Visualization</button>
+          <button class="reset-btn">Reset</button>
+        </div>
+        <div class="visualization-status">
+          <p>Current Algorithm: <strong id="currentAlgo">None</strong></p>
+          <p>Status: <em id="status">Idle</em></p>
+          <p>Steps Completed: <span id="steps">0</span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Change Name Modal -->
+  <div class="modal-overlay" *ngIf="showChangeNameModal">
+    <div class="modal-content">
+      <span class="close-btn" (click)="showChangeNameModal = false"
+        >&times;</span
+      >
+      <h3>Change Your Name</h3>
+      <form (ngSubmit)="submitChangeName()">
+        <div class="form-group">
+          <label for="newName">New Name</label>
+          <input
+            type="text"
+            id="newName"
+            [(ngModel)]="changeNameData.newName"
+            name="newName"
+            placeholder="Enter your new name"
+            required
+          />
+        </div>
+        <button type="submit" class="submit-btn">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div class="modal-overlay" *ngIf="showChangePasswordModal">
+    <div class="modal-content">
+      <span class="close-btn" (click)="showChangePasswordModal = false"
+        >&times;</span
+      >
+      <h3>Change Your Password</h3>
+      <form (ngSubmit)="submitChangePassword()">
+        <div class="form-group">
+          <label for="currentPassword">Current Password</label>
+          <input
+            type="password"
+            id="currentPassword"
+            [(ngModel)]="changePasswordData.currentPassword"
+            name="currentPassword"
+            placeholder="Enter current password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="newPassword">New Password</label>
+          <input
+            type="password"
+            id="newPassword"
+            [(ngModel)]="changePasswordData.newPassword"
+            name="newPassword"
+            placeholder="Enter new password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="confirmNewPassword">Confirm New Password</label>
+          <input
+            type="password"
+            id="confirmNewPassword"
+            [(ngModel)]="changePasswordData.confirmPassword"
+            name="confirmPassword"
+            placeholder="Confirm new password"
+            required
+          />
+        </div>
+        <button type="submit" class="submit-btn">Update Password</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Account Modal -->
+  <div class="modal-overlay" *ngIf="showDeleteAccountModal">
+    <div class="modal-content">
+      <span class="close-btn" (click)="showDeleteAccountModal = false"
+        >&times;</span
+      >
+      <h3>Delete Your Account</h3>
+      <div class="warning-message">
+        <p>
+          <i class="fas fa-exclamation-triangle"></i> This action cannot be
+          undone!
+        </p>
+      </div>
+      <form (ngSubmit)="submitDeleteAccount()">
+        <div class="form-group">
+          <label for="deletePassword">Enter your password to confirm</label>
+          <input
+            type="password"
+            id="deletePassword"
+            [(ngModel)]="deleteAccountData.password"
+            name="password"
+            placeholder="Your password"
+            required
+          />
+        </div>
+        <button type="submit" class="delete-btn">
+          Permanently Delete My Account
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document
+      .querySelector(".run-btn")
+      .addEventListener("click", function (event) {
+        event.preventDefault();
+      });
+
+    document
+      .querySelector(".reset-btn")
+      .addEventListener("click", function (event) {
+        event.preventDefault();
+      });
+  });
+</script>

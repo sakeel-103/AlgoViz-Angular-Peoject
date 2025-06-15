@@ -1,0 +1,194 @@
+<app-navbar></app-navbar>
+
+<!-- Back Button at Top-Left -->
+<button
+  class="back-button"
+  (click)="goBack()"
+  aria-label="Go back to previous page"
+>
+  ←
+</button>
+
+<div class="warshall-container">
+  <h1>Floyd-Warshall Algorithm Visualizer</h1>
+
+  <div class="controls-row">
+    <div class="control-group">
+      <label>Number of Nodes (3-10):</label>
+      <input
+        type="number"
+        [ngModel]="numberOfNodes"
+        (ngModelChange)="numberOfNodes = $event; generateGraph()"
+        min="3"
+        max="10"
+        class="input-field"
+      />
+    </div>
+
+    <div class="control-group">
+      <label>Graph Type:</label>
+      <div class="radio-group">
+        <label>
+          <input
+            type="radio"
+            [ngModel]="isDirected"
+            [value]="true"
+            (ngModelChange)="isDirected = $event"
+            name="graphType"
+          />
+          Directed Graph
+        </label>
+        <label>
+          <input
+            type="radio"
+            [ngModel]="isDirected"
+            [value]="false"
+            (ngModelChange)="isDirected = $event"
+            name="graphType"
+          />
+          Undirected Graph
+        </label>
+      </div>
+    </div>
+
+    <button (click)="generateGraph()" class="primary-button">
+      Generate Graph
+    </button>
+    <button
+      (click)="startAnimation()"
+      [disabled]="isAnimating || steps.length === 0"
+      class="accent-button"
+    >
+      Play
+    </button>
+  </div>
+
+  <div class="graph-view-container">
+    <div class="graph-panel">
+      <h2>Original Graph</h2>
+      <div class="canvas-wrapper">
+        <canvas #originalCanvas></canvas>
+      </div>
+    </div>
+
+    <div class="graph-panel">
+      <h2>Intermediate Path</h2>
+      <div class="canvas-wrapper">
+        <canvas #pathCanvas></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="matrix-controls">
+    <div class="matrix-container">
+      <h3>Distance Matrix</h3>
+      <table class="distance-matrix">
+        <tr>
+          <th></th>
+          <th *ngFor="let node of nodes">{{ node.label }}</th>
+        </tr>
+        <tr *ngFor="let row of graph; let i = index">
+          <th>{{ nodes[i].label }}</th>
+          <td
+            *ngFor="let cell of row; let j = index"
+            [class.highlighted]="
+              currentStep > 0 &&
+              steps[currentStep].i === i &&
+              steps[currentStep].j === j
+            "
+            [class.improved]="
+              currentStep > 0 &&
+              steps[currentStep].i === i &&
+              steps[currentStep].j === j &&
+              steps[currentStep].improved
+            "
+            [class.path]="isInShortestPath(i, j)"
+          >
+            {{ cell === Number.POSITIVE_INFINITY ? "∞" : cell }}
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="algorithm-controls">
+      <div class="step-buttons">
+        <button
+          (click)="prevStep()"
+          [disabled]="currentStep <= 0"
+          class="control-button"
+        >
+          <i class="fas fa-step-backward"></i> Previous
+        </button>
+        <button
+          (click)="nextStep()"
+          [disabled]="currentStep >= steps.length - 1"
+          class="control-button"
+        >
+          Next <i class="fas fa-step-forward"></i>
+        </button>
+      </div>
+
+      <div class="playback-controls">
+        <button
+          (click)="startAnimation()"
+          [disabled]="isAnimating || steps.length === 0"
+          class="control-button"
+        >
+          <i class="fas fa-play"></i> Start
+        </button>
+        <button
+          (click)="stopAnimation()"
+          [disabled]="!isAnimating"
+          class="control-button"
+        >
+          <i class="fas fa-pause"></i> Pause
+        </button>
+        <button (click)="resetAlgorithm()" class="control-button">
+          <i class="fas fa-redo"></i> Reset
+        </button>
+      </div>
+
+      <div class="speed-control">
+        <label>Animation Speed:</label>
+        <input
+          type="range"
+          [ngModel]="animationSpeed"
+          (ngModelChange)="animationSpeed = $event"
+          min="100"
+          max="2000"
+          step="100"
+          class="slider"
+        />
+        <span>{{ animationSpeed }}ms</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-info" *ngIf="steps.length > 0 && currentStep > 0">
+    <div class="info-panel">
+      <h3>Algorithm Progress</h3>
+      <p>Step {{ currentStep }} of {{ steps.length - 1 }}</p>
+      <p>
+        Checking if path from
+        <span class="node-highlight">{{
+          nodes[steps[currentStep].i].label
+        }}</span>
+        to
+        <span class="node-highlight">{{
+          nodes[steps[currentStep].j].label
+        }}</span>
+        through
+        <span class="node-highlight">{{
+          nodes[steps[currentStep].k].label
+        }}</span>
+        is shorter.
+      </p>
+      <p *ngIf="steps[currentStep].improved" class="improved-message">
+        Path improved! New distance:
+        {{
+          steps[currentStep].dist[steps[currentStep].i][steps[currentStep].j]
+        }}
+      </p>
+    </div>
+  </div>
+</div>

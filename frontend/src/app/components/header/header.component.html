@@ -1,0 +1,2096 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AlgoViz</title>
+    <link href="./style.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/21.6.10/i18next.min.js"></script>
+
+    <style>
+      header {
+        background-color: #1a1a2e;
+        padding: 10px;
+      }
+      nav.container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .logo-img {
+        height: 70px;
+        width: 75px;
+        border-radius: 50%;
+      }
+      .logo-text {
+        font-size: 1.5rem;
+        color: white;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .nav-links {
+        display: flex;
+        gap: 20px;
+      }
+      .nav-item {
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+      }
+      .nav-item:hover {
+        text-decoration: underline;
+      }
+      .github-link img {
+        height: 25px;
+        width: 25px;
+      }
+    </style>
+    <style>
+      canvas {
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+      }
+
+      .algo-button {
+        background: linear-gradient(90deg, #6f42c1, #4e9a4d);
+        color: white;
+        border: none;
+        padding: 15px 25px;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.3s;
+        margin: 10px;
+        display: inline-block;
+        text-align: center;
+      }
+
+      .algo-button:hover {
+        background: linear-gradient(90deg, #5a2f91, #4e8c4d);
+        transform: scale(1.05);
+      }
+      .container {
+        max-width: 1200px;
+        text-align: center;
+      }
+
+      header {
+        background-color: #1a1a2e;
+        padding: 10px;
+      }
+
+      nav.container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-img {
+        height: 70px;
+        width: 75px;
+        border-radius: 50%;
+      }
+
+      .logo-text {
+        font-size: 1.5rem;
+        color: white;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-item {
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+        padding: 10px;
+      }
+
+      .nav-item:hover {
+        text-decoration: underline;
+      }
+
+      .github-link img {
+        height: 25px;
+        width: 25px;
+      }
+      @media (min-width: 856px) and (max-width: 1166px) {
+        .nav-links {
+          flex-wrap: wrap;
+          gap: 1.5rem;
+        }
+
+        .logo-text {
+          font-size: 1.2rem;
+        }
+
+        .nav-item {
+          font-size: 0.9rem;
+        }
+      }
+      .logo-text {
+        white-space: nowrap;
+      }
+      @media (max-width: 1166px) {
+        .menu-icon {
+          display: block;
+        }
+
+        .nav-links {
+          display: none;
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .nav-links.show {
+          display: flex;
+        }
+      }
+    </style>
+
+    <!-- SCSS of testinomials Started -->
+    <style>
+      .item {
+        width: 800px;
+        height: 300px;
+        margin: 0 20px;
+        box-sizing: border-box;
+
+        .testimonial-box {
+          display: flex;
+          flex-direction: column;
+          border: 1px solid #ddd;
+          border-radius: 15px;
+          padding: 20px;
+          background-color: #fff;
+          height: 100%;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+      }
+    </style>
+
+    <!-- SCSS for dropdown container -->
+    <style>
+      .dropdown {
+        position: relative;
+        display: inline-block;
+        margin-right: 80px;
+      }
+      .dropdown .dropbtn {
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+        padding: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        transition: background-color 0.3s;
+      }
+
+      .dropdown .dropbtn i {
+        margin-left: 5px;
+      }
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #343a40;
+        min-width: 160px;
+        z-index: 1;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      }
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+      .dropdown-content a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 5px 0;
+        font-size: 1rem;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .dropdown-content a:hover {
+        background-color: #575757;
+      }
+      .dropdown:hover .dropbtn {
+        background-color: #575757;
+      }
+    </style>
+
+    <!-- CSS for dark mode -->
+    <style>
+      body {
+        background-color: #a1a0a0;
+        color: #ffffff;
+      }
+      .navbar {
+        background-color: #1e1e1e;
+      }
+      button {
+        background-color: #626262;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+      }
+
+      button:hover {
+        background-color: #373737;
+      }
+      .icon {
+        color: #ffffff;
+        margin-left: 45px;
+      }
+      a {
+        color: #bb86fc;
+      }
+      .icon-spacing {
+        margin-left: 100px;
+        cursor: pointer;
+      }
+
+      .dark-mode-toggle {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+    </style>
+
+    <!-- Variousalgorithm SCSS -->
+    <style>
+      .graph-types {
+        .graph-grid {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-around;
+          gap: 2rem;
+        }
+
+        .graph-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 200px;
+          height: 200px;
+          border: 1px solid #1b1919;
+          border-radius: 8px;
+          text-align: center;
+          background-color: #242323;
+
+          .graph-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+          }
+
+          h3 {
+            font-size: 1rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .graph-item {
+            width: 120px;
+            height: 120px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .graph-item {
+            width: 100px;
+            height: 100px;
+          }
+        }
+      }
+    </style>
+
+    <!-- SCSS for contact demo form -->
+    <style>
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        overflow: auto;
+      }
+      .modal-content {
+        background-color: #1e2124;
+        margin: 10% auto;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 500px;
+        color: #ffffff;
+      }
+      .close {
+        color: #ffffff;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+      .close:hover,
+      .close:focus {
+        color: #cccccc;
+      }
+      #contactForm {
+        display: flex;
+        flex-direction: column;
+      }
+      #contactForm label {
+        margin-top: 15px;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #ffffff;
+      }
+      #contactForm input,
+      #contactForm textarea {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #36393f;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: #2f3136;
+        color: #ffffff;
+      }
+      #contactForm textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+      #contactForm button,
+      #closeConfirmation {
+        margin-top: 10px;
+        padding: 12px;
+        background-color: #36393f;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+      #contactForm button:hover,
+      #closeConfirmation:hover {
+        background-color: #40444b;
+      }
+      .modal-content h2 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        color: #ffffff;
+        font-size: 24px;
+      }
+      #confirmationMessage {
+        text-align: center;
+      }
+      #confirmationMessage h2 {
+        color: #ffffff;
+        margin-bottom: 15px;
+      }
+      #confirmationMessage p {
+        margin-bottom: 20px;
+        color: #cccccc;
+      }
+      .footer {
+        background-color: #1e2124;
+        color: #fff;
+        padding: 20px 0;
+      }
+
+      .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .footer-links a {
+        color: #ffffff;
+        text-decoration: none;
+        margin: 0 10px;
+        transition: opacity 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        opacity: 0.8;
+      }
+    </style>
+    <style>
+      /* Profile Dropdown */
+      .profile-dropdown {
+        position: relative;
+        display: inline-block;
+        margin-left: 1.5rem;
+      }
+
+      .profile-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid #fa07bd;
+        cursor: pointer;
+        transition: transform 0.2s ease, border 0.2s ease;
+      }
+
+      .profile-img:hover {
+        transform: scale(1.05);
+        border-color: #ccc;
+      }
+
+      /* Dropdown Menu */
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 0;
+        background-color: #1a1a2e;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .dropdown-content.show {
+        display: block;
+      }
+
+      .dropdown-item {
+        color: #333;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        transition: background-color 0.2s ease;
+      }
+
+      .dropdown-item:hover {
+        background-color: grey;
+        color: #fff;
+      }
+
+      /* Hamburger Icon for Mobile */
+      .hamburger {
+        display: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: white;
+        padding: 10px;
+      }
+      /* Dropdown items inside the dropdown */
+      .dropdown-content a {
+        color: white !important;
+        font-family: "Poppins", sans-serif;
+        font-size: 1.1rem !important;
+        text-decoration: none !important;
+        display: block;
+        padding: 8px 10px;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+      }
+
+      /* Hover effect for dropdown items */
+      .dropdown-content a:hover {
+        background-color: #575757;
+        color: #18cade !important;
+        transform: scale(1.05);
+      }
+
+      /* Show the dropdown content when hovering */
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+    </style>
+
+    <!-- SCSS End here -->
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div
+          class="logo"
+          style="display: flex; align-items: flex-start; width: 20%"
+        >
+          <a
+            href="#hero"
+            style="
+              color: white;
+              font-size: 1.5rem;
+              text-decoration: none;
+              white-space: nowrap;
+            "
+            >ALGOVIZ</a
+          >
+        </div>
+
+        <div class="menu-icon" id="menu-icon" style="display: none">
+          <div class="bar1"></div>
+          <div class="bar2"></div>
+          <div class="bar3"></div>
+        </div>
+
+        <!-- Navbar first Dropdown started from here-->
+
+        <div class="nav-links" id="nav-links">
+          <div class="navbar">
+            <div class="dropdown">
+              <a
+                class="dropbtn"
+                style="
+                  color: white;
+                  text-decoration: none;
+                  font-size: 1rem;
+                  display: flex;
+                  align-items: center;
+                  padding: 10px;
+                  cursor: pointer;
+                  transition: color 0.3s, background-color 0.3s;
+                "
+              >
+                Events
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <div class="dropdown-content">
+                <a
+                  class="nav-item"
+                  href="#features"
+                  style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    transition: color 0.3s, background-color 0.3s;
+                    padding: 5px 0;
+                  "
+                  >Features</a
+                >
+                <a
+                  class="nav-item"
+                  href="#graph-types"
+                  style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    transition: color 0.3s, background-color 0.3s;
+                    padding: 5px 0;
+                  "
+                  >Graph Types</a
+                >
+                <a
+                  class="nav-item"
+                  href="#algorithms"
+                  style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    transition: color 0.3s, background-color 0.3s;
+                    padding: 5px 0;
+                  "
+                  >Algorithms</a
+                >
+                <a
+                  class="nav-item"
+                  href="#visualizer"
+                  style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    transition: color 0.3s, background-color 0.3s;
+                    padding: 5px 0;
+                  "
+                  >Visualizer</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Navbar second Dropdown -->
+          <div class="navbar">
+            <div class="dropdown">
+              <a
+                class="dropbtn"
+                style="
+                  color: white;
+                  text-decoration: none;
+                  font-size: 1rem;
+                  display: flex;
+                  align-items: center;
+                  padding: 10px;
+                  cursor: pointer;
+                  transition: color 0.3s, background-color 0.3s;
+                "
+              >
+                Visualization
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <div class="dropdown-content">
+                <a
+                  class="nav-item"
+                  href="/prims-algo"
+                  style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    transition: color 0.3s, background-color 0.3s;
+                    padding: 5px 0;
+                  "
+                  >Prim's Algorithm</a
+                >
+                <a
+                  class="nav-item"
+                  href="/n-queen-visualizer"
+                  style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    transition: color 0.3s, background-color 0.3s;
+                    padding: 5px 0;
+                  "
+                  >N-Queen's</a
+                >
+                <a
+                  class="nav-item"
+                  href="dijkstras-algo"
+                  style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    transition: color 0.3s, background-color 0.3s;
+                    padding: 5px 0;
+                  "
+                  >Dijesktr's Algorithm</a
+                >
+                <a
+                  class="nav-item"
+                  href="warshall-algo"
+                  style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    transition: color 0.3s, background-color 0.3s;
+                    padding: 5px 0;
+                  "
+                  >Warshall's algorithm</a
+                >
+                <a
+                  class="nav-item"
+                  href="/bfsPage"
+                  style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    transition: color 0.3s, background-color 0.3s;
+                    padding: 5px 0;
+                  "
+                  >BFS Algorithm</a
+                >
+                <a
+                  class="nav-item"
+                  href="/dfsPage"
+                  style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    transition: color 0.3s, background-color 0.3s;
+                    padding: 5px 0;
+                  "
+                  >DFS Algorithm</a
+                >
+                <!-- <a
+                  class="nav-item"
+                  href="/maze-runner"
+                  style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    transition: color 0.3s, background-color 0.3s;
+                    padding: 5px 0;
+                  "
+                  >Maze-Runner-Visualizer</a
+                >
+                <a
+                  class="nav-item"
+                  href="/forest"
+                  style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    transition: color 0.3s, background-color 0.3s;
+                    padding: 5px 0;
+                  "
+                  >Forest-Explorer</a
+                >
+                <a
+                  class="nav-item"
+                  href="/tower-traversal"
+                  style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    display: block;
+                    transition: color 0.3s, background-color 0.3s;
+                    padding: 5px 0;
+                  "
+                  >Tower-Traversal</a
+                > -->
+              </div>
+            </div>
+          </div>
+          <a
+            class="nav-item"
+            href="/faq"
+            style="
+              color: white;
+              text-decoration: none;
+              font-size: 1rem;
+              transition: color 0.3s, background-color 0.3s;
+            "
+            >FAQ</a
+          >
+          <a
+            class="nav-item"
+            href="/quiz"
+            style="
+              color: white;
+              text-decoration: none;
+              font-size: 1rem;
+              transition: color 0.3s, background-color 0.3s;
+            "
+            >Quiz</a
+          >
+          <a
+            class="nav-item"
+            href="/questions"
+            style="
+              color: white;
+              text-decoration: none;
+              font-size: 1rem;
+              transition: color 0.3s, background-color 0.3s;
+            "
+            >Access Library</a
+          >
+          <!-- <a
+            class="nav-item"
+            href="/review"
+            style="
+              color: white;
+              text-decoration: none;
+              font-size: 1rem;
+              transition: color 0.3s, background-color 0.3s;
+            "
+            >Reviews</a
+          > -->
+          <!-- <a
+            class="nav-item"
+            href="/login"
+            style="
+              color: white;
+              text-decoration: none;
+              font-size: 1rem;
+              transition: color 0.3s, background-color 0.3s;
+            "
+            >Log In</a
+          > -->
+        </div>
+        <!-- Navbar End here -->
+
+        <!-- Dark Mode Icon but only showing the icon which is a bootstrap icon but the funtionality disabled  -->
+        <div>
+          <span
+            *ngIf="!isDarkMode"
+            (click)="toggleDarkMode()"
+            title="Enable Dark Mode"
+            class="icon-spacing"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="white"
+              class="bi bi-moon-stars"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286"
+              />
+              <path
+                d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"
+              />
+            </svg>
+          </span>
+          <span
+            *ngIf="isDarkMode"
+            (click)="toggleDarkMode()"
+            title="Enable Light Mode"
+            class="icon-spacing"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="white"
+              class="bi bi-cloud-sun-fill mt-4 mr-2"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M11.473 11a4.5 4.5 0 0 0-8.72-.99A3 3 0 0 0 3 16h8.5a2.5 2.5 0 0 0 0-5z"
+              />
+              <path
+                d="M10.5 1.5a.5.5 0 0 0-1 0v1a.5.5 0 0 0 1 0zm3.743 1.964a.5.5 0 1 0-.707-.707l-.708.707a.5.5 0 0 0 .708.708zm-7.779-.707a.5.5 0 0 0-.707.707l.707.708a.5.5 0 1 0 .708-.708zm1.734 3.374a2 2 0 1 1 3.296 2.198q.3.423.516.898a3 3 0 1 0-4.84-3.225q.529.017 1.028.129m4.484 4.074c.6.215 1.125.59 1.522 1.072a.5.5 0 0 0 .039-.742l-.707-.707a.5.5 0 0 0-.854.377M14.5 6.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z"
+              />
+            </svg>
+          </span>
+        </div>
+        <!-- profile dropdown -->
+        <div class="profile-dropdown">
+          <img
+            src="https://as1.ftcdn.net/v2/jpg/07/77/92/08/1000_F_777920887_JNV7hglZmyROgiZjGb6x9DP4Qfu5gyg0.jpg"
+            alt="Profile"
+            class="profile-img"
+            (click)="toggleDropdown()"
+          />
+          <div class="dropdown-content" [class.show]="isDropdownOpen">
+            <a href="/dashboard" class="dropdown-item btn btn-dark me-3"
+              >Profile</a
+            >
+            <a href="/mainIndex" class="dropdown-item">Home</a>
+            <a href="/aboutUs" class="dropdown-item btn btn-dark me-3"
+              >About Us</a
+            >
+            <a href="/real-world" class="dropdown-item btn btn-dark me-3"
+              >Real World Graph Scenario</a
+            >
+            <a href="/questions" class="dropdown-item btn btn-dark me-3"
+              >Access Library</a
+            >
+            <a href="/compare" class="dropdown-item btn btn-dark me-3"
+              >Algo-Compare</a
+            >
+            <a href="/" (click)="onLogout()" class="dropdown-item">Logout</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- PD Script -->
+    <script>
+      function toggleDropdown() {
+        const dropdown = document.getElementById("dropdown-menu");
+        dropdown.classList.toggle("show");
+      }
+
+      function onLogout() {
+        alert("Logged out successfully!");
+      }
+      window.embeddedChatbotConfig = {
+        chatbotId: "L51AYDMWE0tDQxPXKTgeX",
+        domain: "www.chatbase.co",
+      };
+      (function () {
+        var script = document.createElement("script");
+        script.src = "https://www.chatbase.co/embed.min.js";
+        script.setAttribute("chatbotId", "L51AYDMWE0tDQxPXKTgeX");
+        script.setAttribute("domain", "www.chatbase.co");
+        script.defer = true;
+        document.body.appendChild(script);
+      })();
+    </script>
+
+    <!-- Next section started -->
+    <section id="hero" class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 data-i18n="hero-title">
+            Unlock the Power of Algorithms Visualization
+          </h1>
+          <p data-i18n="hero-description">
+            Dive into the fascinating world of algorithm's and master advanced
+            traversal techniques with AlgoViz.
+          </p>
+          <a href="/resources" class="cta-button" data-i18n="start-exploring"
+            >Start Exploring</a
+          >
+        </div>
+      </div>
+      <div class="graph-visual">
+        <div class="node" style="top: 20%; left: 20%">A</div>
+        <div class="node" style="top: 60%; left: 30%">B</div>
+        <div class="node" style="top: 40%; left: 60%">C</div>
+        <div class="node" style="top: 80%; left: 70%">D</div>
+        <div
+          class="edge"
+          style="width: 100px; top: 25%; left: 25%; transform: rotate(30deg)"
+        ></div>
+        <div
+          class="edge"
+          style="width: 150px; top: 45%; left: 35%; transform: rotate(-10deg)"
+        ></div>
+        <div
+          class="edge"
+          style="width: 120px; top: 65%; left: 40%; transform: rotate(40deg)"
+        ></div>
+      </div>
+    </section>
+    <div class="min-h-screen">
+      <div class="container mx-auto px-4 py-16">
+        <div class="flex flex-col items-center text-center space-y-8 mb-16">
+          <h1
+            class="text-5xl md:text-7xl font-bold text-white tracking-tight graph-a"
+            style="display: inline-block; transition: transform 0.3s ease"
+          >
+            Graph Algorithms
+            <span
+              class="block text-2xl md:text-3xl mt-2 text-indigo-200"
+              style="color: #7b95ff"
+              >Visualized & Simplified</span
+            >
+          </h1>
+
+          <style>
+            .graph-a:hover {
+              transform: scale(1.1);
+            }
+          </style>
+
+          <p class="text-xl text-indigo-100 max-w-2xl">
+            Master advanced graph theory through interactive visualizations and
+            hands-on exploration with GraphExplorer Pro.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div class="bg-white shadow-lg rounded-2xl p-6 text-gray-800 box-g">
+            <span class="share-icon text-2xl">📤</span>
+            <h3 class="text-xl font-semibold mb-2 mt-4">
+              Interactive Visualization
+            </h3>
+            <p class="text-gray-600">
+              Watch algorithms come to life with step-by-step visual
+              demonstrations.
+            </p>
+          </div>
+
+          <div class="bg-white shadow-lg rounded-2xl p-6 text-gray-800 box-g">
+            <span class="git-branch-icon text-2xl">🌿</span>
+            <h3 class="text-xl font-semibold mb-2 mt-4">Advanced Algorithms</h3>
+            <p class="text-gray-600">
+              Learn complex algorithms including DFS, BFS, Dijkstra's, and more.
+            </p>
+          </div>
+
+          <div class="bg-white shadow-lg rounded-2xl p-6 text-gray-800 box-g">
+            <span class="zap-icon text-2xl">⚡</span>
+            <h3 class="text-xl font-semibold mb-2 mt-4">Real-time Analysis</h3>
+            <p class="text-gray-600">
+              Get instant feedback and performance metrics as you explore.
+            </p>
+          </div>
+          <style>
+            h3.text-xl {
+              color: rgb(124, 123, 123);
+            }
+          </style>
+        </div>
+      </div>
+
+      <!-- For Background Elements -->
+      <div
+        class="absolute top-0 right-0 w-1/2 h-full opacity-20 pointer-events-none"
+      >
+        <script>
+          for (let i = 0; i < 5; i++) {
+            const dot = document.createElement("div");
+            dot.className = "absolute rounded-full bg-white";
+            dot.style.width = "12px";
+            dot.style.height = "12px";
+            dot.style.top = `${Math.random() * 100}%`;
+            dot.style.left = `${Math.random() * 100}%`;
+            document.body.appendChild(dot);
+          }
+          for (let i = 0; i < 4; i++) {
+            const line = document.createElement("div");
+            line.className = "absolute bg-white/30";
+            line.style.height = "2px";
+            line.style.width = "100px";
+            line.style.transform = `rotate(${Math.random() * 360}deg)`;
+            line.style.top = `${Math.random() * 100}%`;
+            line.style.left = `${Math.random() * 100}%`;
+            document.body.appendChild(line);
+          }
+        </script>
+      </div>
+    </div>
+    <!-- Merged LandingPage component ends here -->
+
+    <section id="features" class="features">
+      <div class="container">
+        <h2 data-i18n="why-choose">Why Choose Algorithm Visualizer?</h2>
+        <div class="feature-grid">
+          <div
+            class="feature-card"
+            onmouseover="this.querySelector('p').style.color='#001f3f';"
+            onmouseout="this.querySelector('p').style.color='';"
+          >
+            <div class="feature-icon">📊</div>
+            <h3 data-i18n="interactive-visualizations">
+              Interactive Visualizations
+            </h3>
+            <p data-i18n="interactive-visualizations-desc">
+              Experience graph algorithms in action with our cutting-edge
+              visualization tools.
+            </p>
+          </div>
+          <div
+            class="feature-card"
+            onmouseover="this.querySelector('p').style.color='#001f3f';"
+            onmouseout="this.querySelector('p').style.color='';"
+          >
+            <div class="feature-icon">🧠</div>
+            <h3 data-i18n="in-depth-learning">In-Depth Learning</h3>
+            <p data-i18n="in-depth-learning-desc">
+              Gain a deep understanding of graph theory and its practical
+              applications.
+            </p>
+          </div>
+          <div
+            class="feature-card"
+            onmouseover="this.querySelector('p').style.color='#001f3f';"
+            onmouseout="this.querySelector('p').style.color='';"
+          >
+            <div class="feature-icon">🚀</div>
+            <h3 data-i18n="performance-optimization">
+              Performance Optimization
+            </h3>
+            <p data-i18n="performance-optimization-desc">
+              Learn how to implement and optimize graph algorithms for
+              real-world scenarios.
+            </p>
+          </div>
+          <div
+            class="feature-card"
+            onmouseover="this.querySelector('p').style.color='#001f3f';"
+            onmouseout="this.querySelector('p').style.color='';"
+          >
+            <div class="feature-icon">🌐</div>
+            <h3 data-i18n="real-world-applications">Real-World Applications</h3>
+            <p data-i18n="real-world-applications-desc">
+              Discover how graph algorithms power social networks, GPS systems,
+              and more.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="graph-types" class="graph-types">
+      <style>
+        h3 {
+          color: white;
+        }
+      </style>
+      <div class="container">
+        <h2 data-i18n="explore-graph-types">
+          Explore Various Algorithms Types
+        </h2>
+        <div class="graph-grid">
+          <div class="graph-item">
+            <div class="graph-icon">→</div>
+            <h3 data-i18n="directed-graphs">Directed Graphs</h3>
+          </div>
+          <div class="graph-item">
+            <div class="graph-icon">⇔</div>
+            <h3 data-i18n="undirected-graphs">Undirected Graphs</h3>
+          </div>
+          <div class="graph-item">
+            <div class="graph-icon">⚖️</div>
+            <h3 data-i18n="weighted-graphs">Weighted Graphs</h3>
+          </div>
+          <div class="graph-item">
+            <div class="graph-icon">🌳</div>
+            <h3 data-i18n="trees">Trees</h3>
+          </div>
+          <div class="graph-item">
+            <div class="graph-icon">⇉</div>
+            <h3 data-i18n="directed-acyclic-graphs">DAG</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2nd Section for algorithms descriptions -->
+    <section id="algorithms" class="algorithms">
+      <div class="container">
+        <h2 data-i18n="master-key-algorithms">Master Key Graph Algorithms</h2>
+        <div class="algorithm-tabs">
+          <button
+            class="tab-button"
+            [class.active]="activeTab === 'dfs'"
+            (click)="setActiveTab('dfs')"
+            data-i18n="dfs"
+          >
+            DFS
+          </button>
+          <button
+            class="tab-button"
+            [class.active]="activeTab === 'bfs'"
+            (click)="setActiveTab('bfs')"
+            data-i18n="bfs"
+          >
+            BFS
+          </button>
+          <button
+            class="tab-button"
+            [class.active]="activeTab === 'dijkstra'"
+            (click)="setActiveTab('dijkstra')"
+            data-i18n="dijkstra"
+          >
+            Dijkstra's
+          </button>
+          <button
+            class="tab-button"
+            [class.active]="activeTab === 'bellmanFord'"
+            (click)="setActiveTab('bellmanFord')"
+            data-i18n="bellmanFord"
+          >
+            Bellman-Ford
+          </button>
+          <button
+            class="tab-button"
+            [class.active]="activeTab === 'floydWarshall'"
+            (click)="setActiveTab('floydWarshall')"
+            data-i18n="floydWarshall"
+          >
+            Floyd-Warshall
+          </button>
+          <button
+            class="tab-button"
+            [class.active]="activeTab === 'Tarjans'"
+            (click)="setActiveTab('tarjans')"
+            data-i18n="tarjans"
+          >
+            Tarjans's
+          </button>
+          <button
+            class="tab-button"
+            [class.active]="activeTab === 'kruskals'"
+            (click)="setActiveTab('kruskals')"
+            data-i18n="krushkals"
+          >
+            Kruskal's
+          </button>
+        </div>
+
+        <div class="tab-content">
+          <!-- DFS 1st Content added here -->
+          <div *ngIf="activeTab === 'dfs'" id="dfs-content">
+            <h3 data-i18n="dfs-full">Depth-First Search (DFS)</h3>
+            <p data-i18n="dfs-description">
+              DFS is a graph traversal algorithm that explores as far as
+              possible along each branch before backtracking. It's excellent
+              for:
+            </p>
+            <ul>
+              <li data-i18n="dfs-use-1">Detecting cycles in graphs</li>
+              <li data-i18n="dfs-use-2">Pathfinding in mazes</li>
+              <li data-i18n="dfs-use-3">Topological sorting</li>
+            </ul>
+          </div>
+
+          <!-- BFS Content 2nd contents-->
+          <div *ngIf="activeTab === 'bfs'" id="bfs-content">
+            <h3 data-i18n="bfs-full">Breadth-First Search (BFS)</h3>
+            <p data-i18n="bfs-description">
+              BFS is a graph traversal algorithm that explores all neighbors at
+              the present depth prior to moving on to nodes at the next depth
+              level. It's used for:
+            </p>
+            <ul>
+              <li data-i18n="bfs-use-1">
+                Finding the shortest path in unweighted graphs
+              </li>
+              <li data-i18n="bfs-use-2">Broadcasting in networks</li>
+            </ul>
+          </div>
+
+          <!-- Dijkstra algorithm Content -->
+          <div *ngIf="activeTab === 'dijkstra'" id="dijkstra-content">
+            <h3 data-i18n="dijkstra-full">Dijkstra's Algorithm</h3>
+            <p data-i18n="dijkstra-description">
+              Dijkstra's algorithm finds the shortest path from a source node to
+              all other nodes in a weighted graph. It's widely used for:
+            </p>
+            <ul>
+              <li data-i18n="dijkstra-use-1">GPS navigation systems</li>
+              <li data-i18n="dijkstra-use-2">Network routing protocols</li>
+            </ul>
+          </div>
+
+          <!-- BellmanFord algorithm Content -->
+          <div *ngIf="activeTab === 'bellmanFord'" id="bellmanFord-content">
+            <h3 data-i18n="bellmanFord-full">Bellman-Ford Algorithm</h3>
+            <p data-i18n="bellmanFord-description">
+              The Bellman-Ford algorithm computes the shortest path from a
+              source node to all other nodes in a weighted graph, handling
+              negative weight edges and detecting negative cycles. It's commonly
+              used for:
+            </p>
+            <ul>
+              <li data-i18n="bellmanFord-use-1">
+                Financial arbitrage detection
+              </li>
+              <li data-i18n="bellmanFord-use-2">
+                Graphs with negative weight edges
+              </li>
+            </ul>
+          </div>
+
+          <!-- FloydWarshall algorithm Content -->
+          <div *ngIf="activeTab === 'floydWarshall'" id="floydWarshall-content">
+            <h3 data-i18n="floydWarshall-full">Floyd-Warshall Algorithm</h3>
+            <p data-i18n="floydWarshall-description">
+              The Floyd-Warshall algorithm finds shortest paths between all
+              pairs of nodes in a weighted graph. It efficiently handles graphs
+              with negative weights and detects negative cycles. It's widely
+              used for:
+            </p>
+            <ul>
+              <li data-i18n="floydWarshall-use-1">Network routing</li>
+              <li data-i18n="floydWarshall-use-2">
+                Transitive closure computation
+              </li>
+            </ul>
+          </div>
+
+          <!-- Tarjan's Algorithm Content -->
+          <div *ngIf="activeTab === 'tarjans'" id="tarjan-content">
+            <h3 data-i18n="tarjan-full">Tarjan's Algorithm</h3>
+            <p data-i18n="tarjan-description">
+              Tarjan's algorithm finds the strongly connected components (SCCs)
+              of a directed graph. It uses a depth-first search (DFS) to explore
+              the graph while maintaining discovery times and low-link values.
+            </p>
+            <p data-i18n="tarjan-use">It's widely used for:</p>
+            <ul>
+              <li data-i18n="tarjan-use-1">
+                Identifying cycles in directed graphs
+              </li>
+              <li data-i18n="tarjan-use-2">Analyzing social networks</li>
+            </ul>
+          </div>
+
+          <!-- Kruskal's Algorithm Content -->
+          <div *ngIf="activeTab === 'kruskals'" id="kruskal-content">
+            <h3 data-i18n="kruskal-full">Kruskal's Algorithm</h3>
+            <p data-i18n="kruskal-description">
+              Kruskal's algorithm finds the Minimum Spanning Tree (MST) of a
+              connected, undirected graph. It sorts all edges and adds them one
+              by one to the MST, ensuring no cycles are formed.
+            </p>
+            <p data-i18n="kruskal-use">It's widely used for:</p>
+            <ul>
+              <li data-i18n="kruskal-use-1">Network design</li>
+              <li data-i18n="kruskal-use-2">Cluster analysis</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visualize Section -->
+    <section id="visualizer" class="visualizer">
+      <div class="container">
+        <h2 data-i18n="interactive-graph-visualizer">
+          Interactive Graph Visualizer
+        </h2>
+        <p class="description" style="text-align: center">
+          Click the buttons to see the respective algorithms in action!
+        </p>
+        <div class="button-container">
+          <!-- BFS Button -->
+          <button class="algo-button" (click)="startBFS()">
+            {{ isBFSRunning ? "Stop BFS" : "Start BFS" }}
+          </button>
+          <div *ngIf="showBFSGif" class="gif-container">
+            <!-- Remember this is onlice image that I have taken below  -->
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Breadth-First-Search-Algorithm.gif"
+              alt="BFS Algorithm Visualization"
+            />
+          </div>
+
+          <!-- DFS Button -->
+          <button class="algo-button" (click)="startDFS()">
+            {{ isDFSRunning ? "Stop DFS" : "Start DFS" }}
+          </button>
+          <div *ngIf="showDFSGif" class="gif-container">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Depth-First-Search.gif"
+              alt="DFS Algorithm Visualization"
+            />
+          </div>
+
+          <!-- Dijkstra Button -->
+          <button class="algo-button" (click)="startDijkstra()">
+            {{ isDijkstraRunning ? "Stop Dijkstra" : "Start Dijkstra" }}
+          </button>
+          <div *ngIf="showDijkstraGif" class="gif-container">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/5/57/Dijkstra_Animation.gif"
+              alt="Dijkstra Algorithm Visualization"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="forum-container">
+      <h1 style="color: #40444b">Discussion Forum</h1>
+
+      <!-- Create New Thread Form -->
+      <div class="new-thread">
+        <h2>Create a New Thread</h2>
+        <input
+          id="thread-title"
+          type="text"
+          placeholder="Thread Title"
+          required
+        />
+        <textarea
+          id="thread-content"
+          placeholder="Write your thread content"
+          required
+        ></textarea>
+        <button onclick="createThread()" id="thread-button">Post Thread</button>
+        <div
+          id="confirmationMessage"
+          class="confirmation-message"
+          style="display: none; color: green; margin-top: 10px"
+        ></div>
+      </div>
+
+      <!-- Display All Threads -->
+      <div id="threads" class="threads">
+        <h2>All Threads</h2>
+      </div>
+    </div>
+
+    <!-- For testimonials part -->
+    <div class="testimonials-wrap">
+      <div class="container">
+        <div class="heading-section">
+          <h2>Happy Clients &amp; Feedbacks</h2>
+        </div>
+
+        <div class="carousel-testimonial">
+          <div class="arrow left-arrow" onclick="prevSlide()">
+            <i class="fa fa-arrow-left"></i>
+          </div>
+
+          <div class="testimonial-container">
+            <div class="testimonial-items">
+              <div class="item">
+                <div class="testimonial-box">
+                  <div
+                    class="user-img"
+                    style="
+                      background-image: url(https://randomuser.me/api/portraits/men/82.jpg);
+                    "
+                  ></div>
+                  <div class="text">
+                    <span class="quote"><i class="fa fa-quote-left"></i></span>
+                    <p class="message">
+                      Far far away, behind the word mountains, far from the
+                      countries Vokalia and Consonantia, there live the blind
+                      texts.
+                    </p>
+                    <p class="name">Mark Huff</p>
+                    <span class="position">Businessman</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="testimonial-box">
+                  <div
+                    class="user-img"
+                    style="
+                      background-image: url(https://randomuser.me/api/portraits/women/79.jpg);
+                    "
+                  ></div>
+                  <div class="text">
+                    <span class="quote"><i class="fa fa-quote-left"></i></span>
+                    <p class="message">
+                      Even the all-powerful Pointing has no control about the
+                      blind texts it is an almost unorthographic life.
+                    </p>
+                    <p class="name">Anna Kendrick</p>
+                    <span class="position">Designer</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="testimonial-box">
+                  <div
+                    class="user-img"
+                    style="
+                      background-image: url(https://randomuser.me/api/portraits/men/88.jpg);
+                    "
+                  ></div>
+                  <div class="text">
+                    <span class="quote"><i class="fa fa-quote-left"></i></span>
+                    <p class="message">
+                      When she reached the first hills of the Italic Mountains,
+                      she had a last view back on the skyline.
+                    </p>
+                    <p class="name">John Smith</p>
+                    <span class="position">Software Engineer</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="arrow right-arrow" onclick="nextSlide()">
+            <i class="fa fa-arrow-right"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+            let currentIndex = 0;
+
+      function showSlide(index) {
+        const testimonialItems = document.querySelector('.testimonial-items');
+        const totalItems = document.querySelectorAll('.testimonial-items .item').length;
+        if (index < 0) {
+          currentIndex = totalItems - 1;
+        } else if (index >= totalItems) {
+          currentIndex = 0;
+        } else {
+    </script>
+
+    <script>
+      let currentIndex = 0;
+      const items = document.querySelectorAll(".testimonial-items .item");
+      const testimonialItems = document.querySelector(".testimonial-items");
+      const totalItems = items.length;
+
+      function showSlide(index) {
+        const offset = -index * 100;
+        testimonialItems.style.transform = `translateX(${offset}%)`;
+      }
+
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalItems;
+        showSlide(currentIndex);
+      }
+
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+        showSlide(currentIndex);
+      }
+
+      // Initial display
+      showSlide(currentIndex);
+    </script>
+
+    <!-- Inline JavaScript code (previously TypeScript) -->
+    <script>
+      // Initialize threads from local storage
+      let threads = JSON.parse(localStorage.getItem("threads") || "[]");
+
+      // Function to create a new thread
+      function createThread() {
+        const titleInput = document.getElementById("thread-title");
+        const contentInput = document.getElementById("thread-content");
+        const confirmationMessage = document.getElementById(
+          "confirmationMessage"
+        );
+
+        const title = titleInput.value;
+        const content = contentInput.value;
+
+        if (title && content) {
+          const newThread = {
+            title,
+            content,
+            replies: [],
+          };
+
+          threads.push(newThread);
+          localStorage.setItem("threads", JSON.stringify(threads));
+
+          titleInput.value = "";
+          contentInput.value = "";
+
+          confirmationMessage.textContent = "Thread posted successfully!";
+          confirmationMessage.style.display = "block";
+          setTimeout(() => {
+            confirmationMessage.style.display = "none";
+          }, 3000);
+          displayThreads();
+        }
+      }
+
+      // Function to display all threads
+      function displayThreads() {
+        const threadsContainer = document.getElementById("threads");
+        threadsContainer.innerHTML = "";
+
+        threads.forEach((thread, index) => {
+          const threadDiv = document.createElement("div");
+          threadDiv.classList.add("thread");
+          threadDiv.innerHTML = `
+          <h3>${thread.title}</h3>
+          <p>${thread.content}</p>
+          <button onclick="toggleReplies(${index})">View Replies</button>
+          <div id="replies-${index}" class="reply-container" style="display:none">
+            ${thread.replies
+              .map((reply) => `<div class="reply">${reply}</div>`)
+              .join("")}
+            <textarea id="reply-input-${index}" placeholder="Your reply"></textarea>
+            <button onclick="addReply(${index})">Post Reply</button>
+          </div>
+        `;
+          threadsContainer.appendChild(threadDiv);
+        });
+      }
+
+      // Function to add a reply to a thread
+      function addReply(threadIndex) {
+        const replyInput = document.getElementById(
+          `reply-input-${threadIndex}`
+        );
+        const replyContent = replyInput.value;
+
+        if (replyContent) {
+          threads[threadIndex].replies.push(replyContent);
+          localStorage.setItem("threads", JSON.stringify(threads));
+          replyInput.value = "";
+          displayThreads();
+        }
+      }
+
+      // Function to toggle the visibility of replies
+      function toggleReplies(threadIndex) {
+        const repliesContainer = document.getElementById(
+          `replies-${threadIndex}`
+        );
+        repliesContainer.style.display =
+          repliesContainer.style.display === "none" ? "block" : "none";
+      }
+
+      // Initial load of threads
+      displayThreads();
+    </script>
+
+    <div id="contactModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 data-i18n="contact-us-title">Contact Us</h2>
+        <form id="contactForm">
+          <label for="name" data-i18n="name">Name:</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="email" data-i18n="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+
+          <label for="message" data-i18n="message">Message:</label>
+          <textarea id="message" name="message" required></textarea>
+
+          <button type="submit" data-i18n="send">Send</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const tabs = document.querySelectorAll(".tab-button");
+        const tabContents = {
+          dfs: `<h3>Depth-First Search (DFS)</h3>
+                 <p>DFS is a graph traversal algorithm that explores as far as possible along each branch before backtracking. It's excellent for:</p>
+                 <ul>
+                     <li>Detecting cycles in graphs</li>
+                     <li>Pathfinding in mazes</li>
+                     <li>Topological sorting</li>
+                 </ul>`,
+          bfs: `<h3>Breadth-First Search (BFS)</h3>
+                 <p>BFS is a graph traversal algorithm that explores neighbors before moving to the next level. It's commonly used for:</p>
+                 <ul>
+                     <li>Finding the shortest path in unweighted graphs</li>
+                     <li>Level-order traversal in trees</li>
+                     <li>Networking and web crawlers</li>
+                 </ul>`,
+          dijkstra: `<h3>Dijkstra's Algorithm</h3>
+                 <p>Dijkstra's is a shortest path algorithm for finding the shortest paths between nodes in a graph, particularly useful for:</p>
+                 <ul>
+                     <li>GPS Navigation Systems</li>
+                     <li>Network routing</li>
+                     <li>Optimal decision-making paths</li>
+                 </ul>`,
+        };
+
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", function () {
+            tabs.forEach((t) => t.classList.remove("active"));
+            this.classList.add("active");
+            document.querySelector(".tab-content").innerHTML =
+              tabContents[this.dataset.tab];
+          });
+        });
+
+        // Animate Graph Nodes Start here
+        gsap.utils.toArray(".node").forEach((node) => {
+          gsap.fromTo(
+            node,
+            {
+              scale: 0.8,
+              opacity: 0,
+              y: 100,
+            },
+            {
+              scale: 1,
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: "bounce",
+              scrollTrigger: {
+                trigger: node,
+                start: "top 80%",
+              },
+            }
+          );
+        });
+
+        // Contact form modal functionality
+        const modal = document.getElementById("contactModal");
+        const btn = document.getElementById("contactUsBtn");
+        const span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function () {
+          modal.style.display = "block";
+        };
+
+        span.onclick = function () {
+          modal.style.display = "none";
+        };
+
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+
+        // Gogle translations object start here. And it will work only while conneted with network
+        const translations = {
+          en: {
+            "hero-title": "Unlock the Power of Graph Algorithms",
+            "hero-description":
+              "Dive into the fascinating world of graph theory and master advanced traversal techniques with GraphExplorer Pro.",
+            "start-exploring": "Start Exploring",
+            features: "Features",
+            "graph-types": "Graph Types",
+            algorithms: "Algorithms",
+            visualizer: "Visualizer",
+            faq: "FAQ",
+            "why-choose": "Why Choose GraphExplorer Pro?",
+            "interactive-visualizations": "Interactive Visualizations",
+            "interactive-visualizations-desc":
+              "Experience graph algorithms in action with our cutting-edge visualization tools.",
+            "in-depth-learning": "In-Depth Learning",
+            "in-depth-learning-desc":
+              "Gain a deep understanding of graph theory and its practical applications.",
+            "performance-optimization": "Performance Optimization",
+            "performance-optimization-desc":
+              "Learn how to implement and optimize graph algorithms for real-world scenarios.",
+            "real-world-applications": "Real-World Applications",
+            "real-world-applications-desc":
+              "Discover how graph algorithms power social networks, GPS systems, and more.",
+            "explore-graph-types": "Explore Various Graph Types",
+            "directed-graphs": "Directed Graphs",
+            "undirected-graphs": "Undirected Graphs",
+            "weighted-graphs": "Weighted Graphs",
+            trees: "Trees",
+            "directed-acyclic-graphs": "Directed Acyclic Graphs",
+            "interactive-graph-visualizer": "Interactive Graph Visualizer",
+            "visualizer-description":
+              "See graph algorithms in action! Experiment with different graph structures and watch as the algorithms traverse them step by step.",
+            "master-key-algorithms": "Master Key Graph Algorithms",
+            dfs: "DFS",
+            bfs: "BFS",
+            dijkstra: "Dijkstra's",
+            "dfs-full": "Depth-First Search (DFS)",
+            "dfs-description":
+              "DFS is a graph traversal algorithm that explores as far as possible along each branch before backtracking. It's excellent for:",
+            "dfs-use-1": "Detecting cycles in graphs",
+            "dfs-use-2": "Pathfinding in mazes",
+            "dfs-use-3": "Topological sorting",
+            "contact-us": "Contact Us",
+            "contact-us-title": "Contact Us",
+            name: "Name:",
+            email: "Email:",
+            message: "Message:",
+            send: "Send",
+            twitter: "Twitter",
+            facebook: "Facebook",
+            linkedin: "LinkedIn",
+          },
+          hi: {
+            "hero-title": "ग्राफ़ एल्गोरिदम की शक्ति को अनलॉक करें",
+            "hero-description":
+              "ग्राफ़एक्सप्लोरर प्रो के साथ ग्राफ़एक्सप्लोरर प्रो के साथ ग्राफ़ सिद्धांत की रोमांचक दुनिया में गोता लगाएं और उन्नत ट्रैवर्सल तकनीकों में महारत हासिल करें।",
+            "start-exploring": "खोजना शुरू करें",
+            features: "विशेषताएँ",
+            "graph-types": "ग्राफ प्रकार",
+            algorithms: "एल्गोरिदम",
+            visualizer: "विज़ुअलाइज़र",
+            faq: "सामान्य प्रश्न",
+            "why-choose": "ग्राफएक्सप्लोरर प्रो क्यों चुनें?",
+            "interactive-visualizations": "इंटरैक्टिव विज़ुअलाइज़ेशन",
+            "interactive-visualizations-desc":
+              "हमारे अत्याधुनिक विज़ुअलाइज़ेशन टूल्स के साथ ग्राफ एल्गोरिदम को क्रिया में अनुभव करें।",
+            "in-depth-learning": "गहन अध्ययन",
+            "in-depth-learning-desc":
+              "ग्राफ सिद्धांत और इसके व्यावहारिक अनुप्रयोगों की गहरी समझ प्राप्त करें।",
+            "performance-optimization": "प्रदर्शन अनुकूलन",
+            "performance-optimization-desc":
+              "वास्तविक दुनिया के परिदृश्यों के लिए ग्राफ एल्गोरिदम को कैसे लागू और अनुकूलित करें, यह सीखें।",
+            "real-world-applications": "वास्तविक दुनिया के अनुप्रयोग",
+            "real-world-applications-desc":
+              "जानें कि ग्राफ एल्गोरिदम कैसे सोशल नेटवर्क, GPS सिस्टम और अधिक को संचालित करते हैं।",
+            "explore-graph-types": "विभिन्न ग्राफ प्रकारों का अन्वेषण करें",
+            "directed-graphs": "निर्देशित ग्राफ",
+            "undirected-graphs": "अनिर्देशित ग्राफ",
+            "weighted-graphs": "भारित ग्राफ",
+            trees: "वृक्ष",
+            "directed-acyclic-graphs": "निर्देशित अचक्रीय ग्राफ",
+            "interactive-graph-visualizer": "इंटरैक्टिव ग्राफ विज़ुअलाइज़र",
+            "visualizer-description":
+              "ग्राफ एल्गोरिदम को कार्रवाई में देखें! विभिन्न ग्राफ संरचनाओं के साथ प्रयोग करें और देखें कि एल्गोरिदम उन्हें कैसे चरण-दर-चरण पार करते हैं।",
+            "master-key-algorithms": "मास्टर की ग्राफ एल्गोरिदम",
+            dfs: "DFS",
+            bfs: "BFS",
+            dijkstra: "डिजक्स्ट्रा",
+            "dfs-full": "गहरी पहुंच खोज (DFS)",
+            "dfs-description":
+              "DFS एक ग्राफ ट्रैवर्सल एल्गोरिदम है जो प्रत्येक शाखा के सबसे दूर तक पहुंचता है और फिर वापस जाता है। यह बहुत अच्छा है:",
+            "dfs-use-1": "ग्राफ में सिक्ल का पता लगाने के लिए",
+            "dfs-use-2": "मेज़ों में पथ खोजने के लिए",
+            "dfs-use-3": "टॉपोलॉजिकल सॉर्टिंग",
+            "contact-us": "संपर्क करें",
+            "contact-us-title": "संपर्क करें",
+            name: "नाम:",
+            email: "ईमेल:",
+            message: "संदेश:",
+            send: "भेजें",
+            twitter: "ट्विटर",
+            facebook: "फेसबुक",
+            linkedin: "लिंक्डइन",
+          },
+          fr: {
+            "hero-title": "Débloquez la puissance des algorithmes de graphes",
+            "hero-description":
+              "Plongez dans le monde fascinant de la théorie des graphes et maîtrisez les techniques de traversée avancées avec GraphExplorer Pro.",
+            "start-exploring": "Commencer l'exploration",
+            features: "Fonctionnalités",
+            "graph-types": "Types de graphes",
+            algorithms: "Algorithmes",
+            visualizer: "Visualiseur",
+            faq: "FAQ",
+            "why-choose": "Pourquoi choisir GraphExplorer Pro ?",
+            "interactive-visualizations": "Visualisations interactives",
+            "interactive-visualizations-desc":
+              "Expérimentez les algorithmes de graphes en action avec nos outils de visualisation de pointe.",
+            "in-depth-learning": "Apprentissage approfondi",
+            "in-depth-learning-desc":
+              "Acquérez une compréhension approfondie de la théorie des graphes et de ses applications pratiques.",
+            "performance-optimization": "Optimisation des performances",
+            "performance-optimization-desc":
+              "Apprenez à implémenter et à optimiser des algorithmes de graphes pour des scénarios du monde réel.",
+            "real-world-applications": "Applications concrètes",
+            "real-world-applications-desc":
+              "Découvrez comment les algorithmes de graphes alimentent les réseaux sociaux, les systèmes GPS et bien plus encore.",
+            "explore-graph-types": "Explorez différents types de graphes",
+            "directed-graphs": "Graphes orientés",
+            "undirected-graphs": "Graphes non orientés",
+            "weighted-graphs": "Graphes pondérés",
+            trees: "Arbres",
+            "directed-acyclic-graphs": "Graphes acycliques orientés",
+            "interactive-graph-visualizer": "Visualiseur de graphes interactif",
+            "visualizer-description":
+              "Voyez les algorithmes de graphes en action ! Expérimentez avec différentes structures de graphes et observez comment les algorithmes les parcourent étape par étape.",
+            "master-key-algorithms": "Algorithmes clés de graphes",
+            dfs: "DFS",
+            bfs: "BFS",
+            dijkstra: "Dijkstra",
+            "dfs-full": "Recherche en profondeur (DFS)",
+            "dfs-description":
+              "DFS est un algorithme de parcours de graphe qui explore autant que possible le long de chaque branche avant de revenir en arrière. Il est excellent pour :",
+            "dfs-use-1": "Détection de cycles dans les graphes",
+            "dfs-use-2": "Recherche de chemin dans les labyrinthes",
+            "dfs-use-3": "Tri topologique",
+            "contact-us": "Contactez-nous",
+            "contact-us-title": "Contactez-nous",
+            name: "Nom :",
+            email: "E-mail :",
+            message: "Message :",
+            send: "Envoyer",
+            twitter: "Twitter",
+            facebook: "Facebook",
+            linkedin: "LinkedIn",
+          },
+          de: {
+            "hero-title": "Erschließen Sie die Macht von Graphalgorithmen",
+            "hero-description":
+              "Tauchen Sie mit GraphExplorer Pro in die faszinierende Welt der Graphentheorie ein und meistern Sie fortgeschrittene Traversierungstechniken.",
+            "start-exploring": "Starten Sie die Erkundung",
+            features: "Funktionen",
+            "graph-types": "Graphentypen",
+            algorithms: "Algorithmen",
+            visualizer: "Visualisierer",
+            faq: "FAQ",
+            "why-choose": "Warum GraphExplorer Pro wählen?",
+            "interactive-visualizations": "Interaktive Visualisierungen",
+            "interactive-visualizations-desc":
+              "Erleben Sie Graphalgorithmen in Aktion mit unseren hochmodernen Visualisierungstools.",
+            "in-depth-learning": "Tiefgehendes Lernen",
+            "in-depth-learning-desc":
+              "Gewinnen Sie ein tiefes Verständnis der Graphentheorie und ihrer praktischen Anwendungen.",
+            "performance-optimization": "Leistungsoptimierung",
+            "performance-optimization-desc":
+              "Lernen Sie, wie man Graphalgorithmen für reale Szenarien implementiert und optimiert.",
+            "real-world-applications": "Anwendungen in der realen Welt",
+            "real-world-applications-desc":
+              "Entdecken Sie, wie Graphalgorithmen soziale Netzwerke, GPS-Systeme und mehr antreiben.",
+            "explore-graph-types": "Erkunden Sie verschiedene Graphentypen",
+            "directed-graphs": "Gerichtete Graphen",
+            "undirected-graphs": "Ungerichtete Graphen",
+            "weighted-graphs": "Gewichtete Graphen",
+            trees: "Bäume",
+            "directed-acyclic-graphs": "Gerichtete azyklische Graphen",
+            "interactive-graph-visualizer": "Interaktiver Graph-Visualisierer",
+            "visualizer-description":
+              "Sehen Sie Graphalgorithmen in Aktion! Experimentieren Sie mit verschiedenen Graphstrukturen und beobachten Sie, wie die Algorithmen sie Schritt für Schritt durchlaufen.",
+            "master-key-algorithms": "Meister-Graphenalgorithmen",
+            dfs: "DFS",
+            bfs: "BFS",
+            dijkstra: "Dijkstra",
+            "dfs-full": "Tiefensuche (DFS)",
+            "dfs-description":
+              "DFS ist ein Graphen-Traversal-Algorithmus, der so weit wie möglich entlang jeder Verzweigung vor dem Zurückgehen erkundet. Es ist hervorragend für:",
+            "dfs-use-1": "Zyklen in Graphen erkennen",
+            "dfs-use-2": "Pfadfindung in Labyrinthen",
+            "dfs-use-3": "Topologische Sortierung",
+            "contact-us": "Kontaktieren Sie uns",
+            "contact-us-title": "Kontaktieren Sie uns",
+            name: "Name:",
+            email: "E-Mail:",
+            message: "Nachricht:",
+            send: "Senden",
+            twitter: "Twitter",
+            facebook: "Facebook",
+            linkedin: "LinkedIn",
+          },
+          es: {
+            "hero-title": "Desbloquea el poder de los algoritmos de grafos",
+            "hero-description":
+              "Sumérgete en el fascinante mundo de la teoría de grafos y domina técnicas avanzadas de recorrido con GraphExplorer Pro.",
+            "start-exploring": "Empieza a explorar",
+            features: "Características",
+            "graph-types": "Tipos de grafos",
+            algorithms: "Algoritmos",
+            visualizer: "Visualizador",
+            faq: "Preguntas frecuentes",
+            "why-choose": "¿Por qué elegir GraphExplorer Pro?",
+            "interactive-visualizations": "Visualizaciones interactivas",
+            "interactive-visualizations-desc":
+              "Experimenta los algoritmos de grafos en acción con nuestras herramientas de visualización de vanguardia.",
+            "in-depth-learning": "Aprendizaje en profundidad",
+            "in-depth-learning-desc":
+              "Obtén una comprensión profunda de la teoría de grafos y sus aplicaciones prácticas.",
+            "performance-optimization": "Optimización del rendimiento",
+            "performance-optimization-desc":
+              "Aprende a implementar y optimizar algoritmos de grafos para escenarios del mundo real.",
+            "real-world-applications": "Aplicaciones del mundo real",
+            "real-world-applications-desc":
+              "Descubre cómo los algoritmos de grafos impulsan las redes sociales, los sistemas GPS y mucho más.",
+            "explore-graph-types": "Explora varios tipos de grafos",
+            "directed-graphs": "Grafos dirigidos",
+            "undirected-graphs": "Grafos no dirigidos",
+            "weighted-graphs": "Grafos ponderados",
+            trees: "Árboles",
+            "directed-acyclic-graphs": "Grafos acíclicos dirigidos",
+            "interactive-graph-visualizer":
+              "Visualizador de grafos interactivo",
+            "visualizer-description":
+              "¡Vea los algoritmos de grafos en acción! Experimente con diferentes estructuras de grafos y observe cómo los algoritmos los recorren paso a paso.",
+            "master-key-algorithms": "Algoritmos clave de grafos",
+            dfs: "DFS",
+            bfs: "BFS",
+            dijkstra: "Dijkstra",
+            "dfs-full": "Búsqueda en profundidad (DFS)",
+            "dfs-description":
+              "DFS es un algoritmo de recorrido de grafos que explora lo más posible a lo largo de cada rama antes de retroceder. Es excelente para:",
+            "dfs-use-1": "Detectar ciclos en grafos",
+            "dfs-use-2": "Búsqueda de rutas en laberintos",
+            "dfs-use-3": "Ordenamiento topológico",
+            "contact-us": "Contáctenos",
+            "contact-us-title": "Contáctenos",
+            name: "Nombre:",
+            email: "Correo electrónico:",
+            message: "Mensaje:",
+            send: "Enviar",
+            twitter: "Twitter",
+            facebook: "Facebook",
+            linkedin: "LinkedIn",
+          },
+        };
+
+        function translatePage(lang) {
+          document.querySelectorAll("[data-i18n]").forEach((element) => {
+            const key = element.getAttribute("data-i18n");
+            if (translations[lang] && translations[lang][key]) {
+              if (
+                element.tagName === "INPUT" ||
+                element.tagName === "TEXTAREA"
+              ) {
+                element.placeholder = translations[lang][key];
+              } else {
+                element.textContent = translations[lang][key];
+              }
+            }
+          });
+        }
+
+        const languageSelect = document.getElementById("languageSelect");
+        languageSelect.addEventListener("change", (event) => {
+          translatePage(event.target.value);
+        });
+        translatePage("en");
+      });
+    </script>
+    <script>
+      console.log("Script is running");
+      const canvas = document.getElementById("graphCanvas");
+      const ctx = canvas.getContext("2d");
+      let nodes = []; // Store nodes as {x, y}
+      let edges = []; // Store edges as [{startNodeIndex, endNodeIndex}]
+      let isDrawing = false;
+      let startNodeIndex = null;
+
+      // Handle mousedown event
+      canvas.addEventListener("mousedown", (e) => {
+        console.log("Mouse down event triggered");
+        const { offsetX, offsetY } = e;
+        const nodeIndex = nodes.findIndex(
+          (node) => Math.hypot(node.x - offsetX, node.y - offsetY) < 20
+        );
+
+        if (nodeIndex === -1) {
+          nodes.push({ x: offsetX, y: offsetY });
+          drawGraph();
+        } else {
+          startNodeIndex = nodeIndex;
+          isDrawing = true;
+        }
+      });
+
+      // Handle mousemove event
+      canvas.addEventListener("mousemove", (e) => {
+        if (isDrawing && startNodeIndex !== null) {
+          const { offsetX, offsetY } = e;
+          drawGraph();
+          ctx.beginPath();
+          ctx.moveTo(nodes[startNodeIndex].x, nodes[startNodeIndex].y);
+          ctx.lineTo(offsetX, offsetY);
+          ctx.stroke();
+        }
+      });
+
+      // Handle mouseup event
+      canvas.addEventListener("mouseup", (e) => {
+        const { offsetX, offsetY } = e;
+        if (isDrawing && startNodeIndex !== null) {
+          const endNodeIndex = nodes.findIndex(
+            (node) => Math.hypot(node.x - offsetX, node.y - offsetY) < 20
+          );
+          if (endNodeIndex !== -1 && endNodeIndex !== startNodeIndex) {
+            edges.push({ startNodeIndex, endNodeIndex });
+            drawGraph();
+          }
+          isDrawing = false;
+          startNodeIndex = null;
+        }
+      });
+
+      // Draw the nodes and edges on the canvas
+      function drawGraph() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        edges.forEach((edge) => {
+          ctx.beginPath();
+          ctx.moveTo(
+            nodes[edge.startNodeIndex].x,
+            nodes[edge.startNodeIndex].y
+          );
+          ctx.lineTo(nodes[edge.endNodeIndex].x, nodes[edge.endNodeIndex].y);
+          ctx.stroke();
+        });
+        nodes.forEach((node) => {
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, 20, 0, Math.PI * 2);
+          ctx.fillStyle = "lightblue";
+          ctx.fill();
+          ctx.stroke();
+        });
+      }
+      document
+        .getElementById("menu-icon")
+        .addEventListener("click", function () {
+          const navLinks = document.getElementById("nav-links");
+          if (navLinks.style.display === "flex") {
+            navLinks.style.display = "none";
+          } else {
+            navLinks.style.display = "flex";
+          }
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+<app-navbar></app-navbar>
+<div class="review-container">
+  <h1 class="text-center">📝 Graph Traversal Discussions</h1>
+  <div *ngIf="loading" class="loader-container">
+    <div class="loader"></div>
+  </div>
+  <div class="review-subContainer" *ngIf="!loading">
+    <div class="review-form">
+      <h2>Submit a Discussion</h2>
+      <input
+        [(ngModel)]="newReview.author"
+        placeholder="Your Name"
+        class="input-field"
+      />
+      <textarea
+        [(ngModel)]="newReview.content"
+        placeholder="Your Thoughts on Graph Traversal"
+        class="input-field"
+      ></textarea>
+      <button (click)="submitReview()" class="submit-btn">Submit</button>
+    </div>
+    <div *ngFor="let review of reviews" class="review-card">
+      <div class="review-details">
+        <h2 class="review-author">{{ review.author }}</h2>
+        <p class="review-content">{{ review.content }}</p>
+      </div>
+      <div class="questions">
+        <div *ngFor="let question of review.questions" class="question-card">
+          <h3>{{ question.author }} asked:</h3>
+          <p>{{ question.content }}</p>
+          <!-- Image Preview -->
+          <img
+            *ngIf="question.file"
+            [src]="getImageUrl(question.file)"
+            alt="Uploaded Image"
+            class="uploaded-image"
+          />
+          <div class="replies">
+            <div *ngFor="let reply of question.replies" class="reply-card">
+              <h4>{{ reply.author }} replied:</h4>
+              <p>{{ reply.content }}</p>
+            </div>
+          </div>
+          <div class="reply-form">
+            <input
+              [(ngModel)]="newReply.author"
+              placeholder="Your Name"
+              class="input-field"
+            />
+            <input
+              [(ngModel)]="newReply.content"
+              placeholder="Your Reply"
+              class="input-field"
+            />
+            <button
+              (click)="submitReply(review.id, question.id)"
+              class="submit-btn"
+            >
+              Reply
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="question-form">
+        <input
+          [(ngModel)]="newQuestion.author"
+          placeholder="Your Name"
+          class="input-field"
+        />
+        <input
+          [(ngModel)]="newQuestion.content"
+          placeholder="Your Question"
+          class="input-field"
+        />
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          class="file-input"
+        />
+        <img
+          *ngIf="newQuestion.file"
+          [src]="getImageUrl(newQuestion.file)"
+          alt="Preview"
+          class="image-preview"
+        />
+        <button (click)="submitQuestion(review.id)" class="submit-btn">
+          Ask Question
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

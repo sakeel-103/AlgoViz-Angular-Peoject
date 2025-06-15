@@ -1,0 +1,772 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.welcome-heading {
+  display: flex;
+  height: 90px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a1a2e;
+  backdrop-filter: blur(10px);
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.nav-items {
+  padding-right: 250px;
+  display: flex;
+  align-items: center;
+}
+
+.welcome-heading .nav-left {
+  display: flex;
+  align-items: center;
+  color: white;
+  padding-left: 80px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.welcome-heading .nav-left p {
+  margin: 0;
+}
+
+.welcome-heading a.nav-item {
+  margin-left: 50px;
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.welcome-heading a.nav-item:hover {
+  color: #12a4f3;
+}
+
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  margin-right: 20px;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #1a1a2e;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6c63ff 0%, #ff6584 100%);
+  padding-top: 100px; /* Account for fixed navbar */
+}
+
+.box {
+  display: flex;
+  width: 90vw;
+  max-width: 950px;
+  background: white;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.left {
+  flex: 1;
+  background: linear-gradient(135deg, #6c63ff 0%, #ff6584 100%);
+  padding: 60px 50px;
+  padding-left: 10%;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.left h2 {
+  font-size: 50px;
+  margin-bottom: 40px;
+  padding-right: 15%;
+  font-weight: bold;
+}
+
+.input-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.input-box input::placeholder {
+  color: #ccc;
+}
+
+.input-box i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ccc;
+  font-size: 16px;
+}
+
+.checkbox-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.checkbox-label {
+  font-size: 14px;
+  color: #fff;
+}
+
+.forgot-password {
+  font-size: 14px;
+  color: #ffeb3b;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(90deg, #ff7eb3, #ff758c);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, #ff758c, #ff7eb3);
+  color: #fff;
+  text-align: center;
+  padding: 40px 30px;
+}
+
+.right h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.right p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.btn-outline {
+  padding: 12px 20px;
+  background: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.btn-outline:hover {
+  background: #fff;
+  color: #ff758c;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+@media (max-width: 360px) {
+  .welcome-heading {
+    flex-wrap: wrap;
+    padding: 10px;
+    height: auto;
+  }
+
+  .welcome-heading .nav-left {
+    font-size: 1rem;
+    padding-left: 10px;
+  }
+
+  .nav-items {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    padding-right: 0;
+    background-color: #1a1a2e;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .nav-items.active {
+    display: flex;
+  }
+
+  .welcome-heading a.nav-item {
+    margin: 10px 0;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .welcome-heading a.nav-item:hover {
+    background-color: #2a2a4e;
+  }
+
+  .hamburger {
+    display: block;
+    margin-right: 10px;
+  }
+
+  .container {
+    padding: 10px;
+    padding-top: 80px;
+  }
+
+  .box {
+    width: 95vw;
+    flex-direction: column;
+    height: auto;
+    min-height: 600px;
+  }
+
+  .left {
+    padding: 30px 20px;
+    padding-left: 5%;
+    flex: none;
+  }
+
+  .left h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    padding-right: 5%;
+  }
+
+  .input-box input {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+
+  .input-box i {
+    left: 10px;
+    font-size: 14px;
+  }
+
+  .checkbox-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .checkbox-label,
+  .forgot-password {
+    font-size: 12px;
+  }
+
+  .btn {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .right {
+    padding: 20px 15px;
+    flex: none;
+    display: flex; /* Ensure it's visible */
+  }
+
+  .right h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  .right p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .btn-outline {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+  .input-box i.bx-envelope,
+  .input-box i.toggle-password {
+    left: auto;
+    right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-heading {
+    flex-wrap: wrap;
+    padding: 10px;
+    height: auto;
+  }
+
+  .welcome-heading .nav-left {
+    font-size: 1.2rem;
+    padding-left: 15px;
+  }
+
+  .nav-items {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    padding-right: 0;
+    background-color: #1a1a2e;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .nav-items.active {
+    display: flex;
+  }
+
+  .welcome-heading a.nav-item {
+    margin: 10px 0;
+    font-size: 0.95rem;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .welcome-heading a.nav-item:hover {
+    background-color: #2a2a4e;
+  }
+
+  .hamburger {
+    display: block;
+    margin-right: 15px;
+  }
+
+  .container {
+    padding: 15px;
+    padding-top: 80px;
+  }
+
+  .box {
+    width: 95vw;
+    flex-direction: column;
+    height: auto;
+    min-height: 650px;
+  }
+
+  .left {
+    padding: 40px 30px;
+    padding-left: 5%;
+    flex: none;
+  }
+
+  .left h2 {
+    font-size: 35px;
+    margin-bottom: 25px;
+    padding-right: 5%;
+  }
+
+  .input-box input {
+    padding: 12px 18px;
+    font-size: 15px;
+  }
+
+  .input-box i {
+    left: 12px;
+    font-size: 15px;
+  }
+
+  .checkbox-label,
+  .forgot-password {
+    font-size: 13px;
+  }
+
+  .btn {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .right {
+    padding: 30px 20px;
+    flex: none;
+    display: flex; /* Ensure it's visible */
+  }
+
+  .right h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+
+  .right p {
+    font-size: 16px;
+    margin-bottom: 25px;
+  }
+
+  .btn-outline {
+    padding: 10px 18px;
+    font-size: 15px;
+  }
+
+  .input-box i.bx-envelope,
+  .input-box i.toggle-password {
+    left: auto;
+    right: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome-heading {
+    flex-wrap: wrap;
+    padding: 15px;
+    height: auto;
+  }
+
+  .welcome-heading .nav-left {
+    justify-content: flex-start;
+    width: auto;
+    margin-bottom: 0;
+    padding-left: 20px;
+  }
+
+  .nav-items {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    padding-right: 0;
+    background-color: #1a1a2e;
+    position: absolute;
+    top: 90px;
+    left: 0;
+    right: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .nav-items.active {
+    display: flex;
+  }
+
+  .welcome-heading a.nav-item {
+    margin: 10px 0;
+    font-size: 1rem;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .welcome-heading a.nav-item:hover {
+    background-color: #2a2a4e;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .container {
+    padding: 20px;
+    padding-top: 100px;
+  }
+
+  .box {
+    width: 92vw;
+    flex-direction: column;
+    height: auto;
+    min-height: 700px;
+  }
+
+  .left {
+    padding: 50px 40px;
+    padding-left: 5%;
+    flex: none;
+  }
+
+  .left h2 {
+    font-size: 40px;
+    margin-bottom: 30px;
+    padding-right: 5%;
+  }
+
+  .input-box input {
+    padding: 14px 19px;
+    font-size: 15.5px;
+  }
+
+  .input-box i {
+    left: 14px;
+    font-size: 15.5px;
+  }
+
+  .checkbox-label,
+  .forgot-password {
+    font-size: 14px;
+  }
+
+  .btn {
+    padding: 14px;
+    font-size: 17px;
+  }
+
+  .right {
+    padding: 35px 25px;
+    flex: none;
+    display: flex; /* Ensure it's visible */
+  }
+
+  .right h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  .right p {
+    font-size: 17px;
+    margin-bottom: 25px;
+  }
+
+  .btn-outline {
+    padding: 11px 19px;
+    font-size: 15.5px;
+  }
+
+  .input-box i.bx-envelope,
+  .input-box i.toggle-password {
+    left: auto;
+    right: 15px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .welcome-heading {
+    padding: 10px 15px;
+  }
+
+  .nav-items {
+    padding-right: 150px;
+  }
+
+  .welcome-heading .nav-left {
+    padding-left: 50px;
+    font-size: 1.4rem;
+  }
+
+  .welcome-heading a.nav-item {
+    margin-left: 30px;
+    font-size: 0.95rem;
+  }
+
+  .container {
+    padding: 25px;
+    padding-top: 100px;
+  }
+
+  .box {
+    max-width: 850px;
+    flex-direction: row;
+  }
+
+  .left {
+    padding: 55px 45px;
+    padding-left: 8%;
+  }
+
+  .left h2 {
+    font-size: 45px;
+    margin-bottom: 35px;
+    padding-right: 10%;
+  }
+
+  .input-box input {
+    padding: 15px 20px;
+    font-size: 16.5px;
+  }
+
+  .input-box i {
+    font-size: 16.5px;
+  }
+
+  .btn {
+    padding: 15px;
+    font-size: 18.5px;
+  }
+
+  .right {
+    padding: 40px 30px;
+  }
+
+  .right h1 {
+    font-size: 34px;
+  }
+
+  .right p {
+    font-size: 17.5px;
+  }
+
+  .btn-outline {
+    padding: 12px 20px;
+    font-size: 16.5px;
+  }
+}
+
+@media (min-width: 769px) {
+  .hamburger {
+    display: none;
+  }
+
+  .welcome-heading {
+    padding: 10px 20px;
+  }
+
+  .nav-items {
+    padding-right: 250px;
+  }
+
+  .welcome-heading .nav-left {
+    padding-left: 80px;
+    font-size: 1.5rem;
+  }
+
+  .welcome-heading a.nav-item {
+    margin-left: 50px;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .welcome-heading {
+    padding: 10px 40px;
+  }
+
+  .nav-items {
+    padding-right: 300px;
+  }
+
+  .welcome-heading .nav-left {
+    padding-left: 100px;
+    font-size: 1.8rem;
+  }
+
+  .welcome-heading a.nav-item {
+    margin-left: 60px;
+    font-size: 1.2rem;
+  }
+
+  .container {
+    padding: 30px;
+    padding-top: 110px;
+  }
+
+  .box {
+    max-width: 1000px;
+    flex-direction: row;
+  }
+
+  .left {
+    padding: 65px 60px;
+    padding-left: 12%;
+  }
+
+  .left h2 {
+    font-size: 55px;
+    margin-bottom: 45px;
+    padding-right: 20%;
+  }
+
+  .input-box input {
+    padding: 16px 22px;
+    font-size: 17px;
+  }
+
+  .input-box i {
+    font-size: 17px;
+  }
+
+  .btn {
+    padding: 16px;
+    font-size: 19px;
+  }
+
+  .right {
+    padding: 45px 35px;
+  }
+
+  .right h1 {
+    font-size: 38px;
+  }
+
+  .right p {
+    font-size: 19px;
+  }
+
+  .btn-outline {
+    padding: 13px 22px;
+    font-size: 17px;
+  }
+}

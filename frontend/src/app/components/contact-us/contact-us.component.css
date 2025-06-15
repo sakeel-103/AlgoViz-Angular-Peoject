@@ -1,0 +1,260 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  background-color: #f9f9f9;
+}
+
+/* Container Styling */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6c63ff 0%, #ff6584 100%);
+  padding: 20px;
+}
+
+/* Back Button */
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.back-button:hover {
+  color: #ff4081;
+}
+
+/* Box Styling */
+.box {
+  display: flex;
+  width: 80%;
+  max-width: 1200px;
+  background-color: rgb(174, 234, 249);
+  border-radius: 12px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8),
+              0 0 20px rgba(0, 255, 0, 0.8),
+              0 0 30px rgba(0, 0, 255, 0.8);
+  animation: blink-border 1.5s infinite;
+}
+
+@keyframes blink-border {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.8),
+                0 0 20px rgba(0, 255, 0, 0.8),
+                0 0 30px rgba(0, 0, 255, 0.8);
+  }
+  40% {
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.8),
+                0 0 20px rgba(0, 0, 255, 0.8),
+                0 0 30px rgba(255, 0, 0, 0.8);
+  }
+  75% {
+    box-shadow: 0 0 10px rgba(0, 0, 255, 0.8),
+                0 0 20px rgba(255, 0, 0, 0.8),
+                0 0 30px rgba(0, 255, 0, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.8),
+                0 0 20px rgba(0, 255, 0, 0.8),
+                0 0 30px rgba(0, 0, 255, 0.8);
+  }
+}
+
+/* Header Section */
+.div-first {
+  padding: 25px 0;
+  text-align: center;
+  background-color: #001f3f;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+.div-first h2 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+  margin: 0;
+}
+
+/* Left and Right Sections */
+.left {
+  flex: 1;
+  font-size: 1.5rem;
+  padding: 25px;
+  color: #6c63ff;
+}
+
+.left p {
+  font-size: 2.5rem;
+  color: black;
+  margin: 0;
+}
+
+.right {
+  flex: 1;
+  padding: 25px;
+}
+
+/* Form Inputs */
+.input-box {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.input-box input,
+.input-box textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #b0b0b0;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.5s, box-shadow 0.5s;
+}
+
+.input-box input:focus,
+.input-box textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Button Styling */
+.btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #0056b3;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn:hover:not(:disabled) {
+  background-color: #00850b;
+  transform: scale(1.02);
+}
+
+.btn:disabled {
+  background-color: #050505;
+  cursor: not-allowed;
+}
+
+/* Contact Text */
+.contact-text {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.contact-text a {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.contact-text a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .box {
+    flex-direction: column;
+    width: 90%;
+    margin-top: 60px;
+  }
+
+  .div-first {
+    padding: 15px 0;
+  }
+
+  .div-first h2 {
+    font-size: 2rem;
+  }
+
+  .left {
+    font-size: 1.2rem;
+    padding: 15px;
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .left p {
+    font-size: 1.8rem;
+  }
+
+  .right {
+    padding: 15px;
+  }
+
+  .input-box input,
+  .input-box textarea {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .btn {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .back-button {
+    font-size: 24px;
+    top: 10px;
+    left: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .div-first h2 {
+    font-size: 1.5rem;
+  }
+
+  .left {
+    font-size: 1rem;
+  }
+
+  .left p {
+    font-size: 1.5rem;
+  }
+
+  .input-box input,
+  .input-box textarea {
+    font-size: 0.8rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+  }
+
+  .contact-text {
+    font-size: 0.8rem;
+  }
+}

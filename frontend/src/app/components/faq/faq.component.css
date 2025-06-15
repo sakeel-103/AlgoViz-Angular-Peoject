@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6c63ff 0%, #ff6584 100%);
+  position: relative;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+}
+
+.montserrat-unique {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff66b2, #8a2be2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff99cc, #9b59b6);
+}
+
+/* For Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #ff66b2 #f0f0f0;
+}
+.back-button {
+  position: fixed; 
+  top: 100px;
+  left: 20px;
+  background: none;
+  border: none;
+  font-size: 30px; 
+  color: white; 
+  cursor: pointer;
+  z-index: 1000; 
+  font-weight: bold;
+}
+
+.back-button:hover {
+  color: #ff4081; 
+}
+
+.faq {
+  padding: 4rem 2rem;
+  margin: auto;
+  margin-top: 100px;
+  max-width: 800px;
+}
+
+.faq h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.faq-search {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.toggle-all {
+  background-color: #4cb8e6f0;
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-all:hover {
+  background-color: #383838;
+}
+
+.accordion__item {
+  margin-bottom: 1.5rem;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  transition: box-shadow 0.3s ease;
+  border-radius: 25px;
+}
+
+.accordion__item:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.accordion__header {
+  background-color: #181818;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 2rem 2.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.question-icon {
+  margin-right: 10px;
+  font-weight: bold;
+  color: #f1c40f;
+}
+
+.accordion__header:hover {
+  background-color: #56caea;
+}
+
+.accordion__content {
+  max-height: 0;
+  overflow: hidden;
+  background-color: #f1f1f1;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0 1.5rem;
+}
+
+.accordion__content p {
+  padding: 1rem 0;
+  margin: 0;
+}
+
+.feedback {
+  margin-top: 1rem;
+}
+
+.feedback span {
+  font-size: 0.9rem;
+}
+
+.feedback i {
+  cursor: pointer;
+  margin-left: 0.5rem;
+  color: #4a4a4a;
+  transition: color 0.3s;
+}
+
+.feedback i:hover {
+  color: #2c3e50;
+}
+
+.accordion__item.active .accordion__content {
+  max-height: none;
+  padding: 1rem 1.5rem;
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+.arrow.active {
+  transform: rotate(180deg);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .faq {
+    padding: 2rem 1rem;
+  }
+
+  .faq h1 {
+    font-size: 2rem;
+  }
+
+  .faq-search {
+    font-size: 0.9rem;
+  }
+
+  .toggle-all {
+    padding: 0.5rem;
+  }
+
+  .accordion__header {
+    font-size: 1.1rem;
+  }
+}

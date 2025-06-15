@@ -1,0 +1,186 @@
+<app-navbar></app-navbar>
+
+<div class="app-container">
+  <!-- Back Button at Top-Left -->
+  <button
+    class="back-button"
+    (click)="goBack()"
+    aria-label="Go back to previous page"
+  >
+    ←
+  </button>
+
+  <!-- Sidebar -->
+  <div class="sidebar" aria-labelledby="sidebar-heading">
+    <h2 id="sidebar-heading">Algorithm Comparison</h2>
+
+    <!-- Graph Input Form -->
+    <form [formGroup]="graphForm" class="graph-input-form">
+      <div class="input-group">
+        <label for="predefinedGraph">Select Predefined Graph</label>
+        <select
+          id="predefinedGraph"
+          formControlName="predefinedGraph"
+          (change)="loadPredefinedGraph()"
+          class="sidebar-button"
+        >
+          <option value="" disabled selected>Select a graph</option>
+          <option *ngFor="let graph of predefinedGraphs" [value]="graph.name">
+            {{ graph.name }}
+          </option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label for="numNodes">Number of Nodes</label>
+        <input
+          id="numNodes"
+          formControlName="numNodes"
+          type="number"
+          min="1"
+          placeholder="e.g., 4"
+        />
+      </div>
+      <div class="input-group">
+        <label for="numEdges">Number of Edges</label>
+        <input
+          id="numEdges"
+          formControlName="numEdges"
+          type="number"
+          min="0"
+          placeholder="e.g., 3"
+        />
+      </div>
+    </form>
+
+    <!-- Algorithm Selection -->
+    <div class="input-group">
+      <label for="algorithm1" class="sr-only">First Algorithm</label>
+      <select
+        id="algorithm1"
+        [(ngModel)]="selectedAlgorithm1"
+        (ngModelChange)="resetComparison()"
+        aria-describedby="algo1-help"
+        class="sidebar-button"
+        required
+      >
+        <option value="" disabled selected>First Algo</option>
+        <option *ngFor="let algo of availableAlgorithms" [value]="algo">
+          {{ algo }}
+        </option>
+      </select>
+      <small id="algo1-help" class="sr-only"
+        >Select the first algorithm to compare</small
+      >
+    </div>
+    <div class="input-group">
+      <label for="algorithm2" class="sr-only">Second Algorithm</label>
+      <select
+        id="algorithm2"
+        [(ngModel)]="selectedAlgorithm2"
+        (ngModelChange)="resetComparison()"
+        aria-describedby="algo2-help"
+        class="sidebar-button"
+        required
+      >
+        <option value="" disabled selected>Second Algo</option>
+        <option *ngFor="let algo of availableAlgorithms" [value]="algo">
+          {{ algo }}
+        </option>
+      </select>
+      <small id="algo2-help" class="sr-only"
+        >Select the second algorithm to compare</small
+      >
+    </div>
+    <button
+      class="sidebar-button compare"
+      (click)="compareAlgorithms()"
+      [disabled]="
+        !selectedAlgorithm1 ||
+        !selectedAlgorithm2 ||
+        selectedAlgorithm1 === selectedAlgorithm2
+      "
+      [attr.aria-disabled]="
+        !selectedAlgorithm1 ||
+        !selectedAlgorithm2 ||
+        selectedAlgorithm1 === selectedAlgorithm2
+          ? 'true'
+          : 'false'
+      "
+    >
+      Compare
+    </button>
+    <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="algorithm-comparison-container">
+    <h1 class="title">
+      {{
+        showComparison && selectedAlgorithm1 && selectedAlgorithm2
+          ? selectedAlgorithm1 + " vs " + selectedAlgorithm2
+          : "ALGORITHM COMPARISON"
+      }}
+    </h1>
+
+    <!-- Placeholder when no comparison is active -->
+    <div class="card placeholder" *ngIf="!showComparison">
+      <p>
+        <strong
+          >Please define a graph, select two algorithms, and click "Compare" to
+          see the comparison details.</strong
+        ><br /><br />
+        This tool allows you to compare graph algorithms by simulating their
+        execution on a user-defined graph. Valid comparisons are:
+      </p>
+      <ul>
+        <li>BFS vs. DFS (Graph traversal algorithms)</li>
+        <li>Prim’s vs. Kruskal’s (Minimum Spanning Tree algorithms)</li>
+      </ul>
+      <p>
+        Visualize the step-by-step execution, compare runtime and memory usage,
+        and see a contextual analysis of which algorithm performs better.
+      </p>
+    </div>
+
+    <!-- Graph Visualization -->
+    <div class="card graph-container" *ngIf="showComparison">
+      <h2>Graph Visualization</h2>
+      <div #graphCanvas class="graph-canvas"></div>
+    </div>
+
+    <!-- Comparison Results -->
+    <div class="card comparison-results" *ngIf="showComparison">
+      <h2>Comparison Results</h2>
+      <div class="result-section">
+        <h3>{{ selectedAlgorithm1 }}</h3>
+        <p><strong>Execution Steps:</strong></p>
+        <ul>
+          <li *ngFor="let step of comparisonResult?.algo1?.steps">
+            {{ step }}
+          </li>
+        </ul>
+        <p><strong>Output:</strong> {{ comparisonResult?.algo1?.output }}</p>
+      </div>
+      <div class="result-section">
+        <h3>{{ selectedAlgorithm2 }}</h3>
+        <p><strong>Execution Steps:</strong></p>
+        <ul>
+          <li *ngFor="let step of comparisonResult?.algo2?.steps">
+            {{ step }}
+          </li>
+        </ul>
+        <p><strong>Output:</strong> {{ comparisonResult?.algo2?.output }}</p>
+      </div>
+    </div>
+
+    <!-- Efficiency Chart -->
+    <div class="card chart-container" *ngIf="showComparison">
+      <h2>Efficiency Comparison Chart</h2>
+      <canvas
+        #efficiencyChart
+        role="img"
+        aria-label="Bar chart comparing algorithm metrics"
+      ></canvas>
+    </div>
+  </div>
+</div>

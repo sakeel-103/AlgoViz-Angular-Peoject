@@ -1,0 +1,128 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+  line-height: 1.6;
+}
+.back-button {
+  position: fixed; 
+  top: 100px;
+  left: 20px;
+  background: none;
+  border: none;
+  font-size: 30px; 
+  color: white; 
+  cursor: pointer;
+  z-index: 1000; 
+  font-weight: bold;
+}
+
+.back-button:hover {
+  color: #ff4081; 
+}
+
+body {
+  background: linear-gradient(135deg, #6c63ff 0%, #ff6584 100%);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 10px; 
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff66b2, #8a2be2); 
+  border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff99cc, #9b59b6); 
+}
+
+html {
+  scrollbar-width: thin; 
+  scrollbar-color: #ff66b2 #f0f0f0; 
+}
+
+/* Header Styling */
+header {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+header .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.about-us {
+  margin-top: 80px;
+  padding: 2rem 10%;
+  text-align: center;
+}
+
+.about-us .content {
+  margin-bottom: 2rem;
+}
+
+.about-us h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #ffd60a;
+}
+
+.about-us p {
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Team Section */
+.team-section {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.team-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #ffd60a;
+}
+
+.team-section p {
+  font-size: 1.1rem;
+}
+
+/* Footer */
+footer {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 1rem 0;
+  text-align: center;
+}
+
+footer p {
+  color: #ffffff;
+}

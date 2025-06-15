@@ -1,0 +1,314 @@
+/* Reset and Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #6c63ff 0%, #ff6584 100%);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  min-height: 100vh;
+  height: 150px; 
+}
+
+.back-button {
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+  font-weight: bold;
+}
+
+.back-button:hover {
+  color: #ff4081;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  padding-top: 8%;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #0b0a0a;
+  font-size: clamp(2rem, 4.5vw, 2.5rem);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+h3 {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  margin-bottom: 0.75rem;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Controls Section */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.controls label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: #070707;
+  min-width: 180px;
+  flex: 1;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.controls input[type="number"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+  font-size: 1rem;
+}
+
+.controls button {
+  padding: 0.5rem 0.5rem;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  flex: 1;
+  min-width: 120px;
+  max-width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-top: 28px;
+}
+
+.controls button:hover {
+  background-color: #0b5ed7;
+}
+
+.controls button:last-child {
+  background-color: #9c27b0;
+}
+
+.controls button:last-child:hover {
+  background-color: #7b1fa2;
+}
+
+/* Radio Buttons */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+form label {
+  display: inline-flex;
+  align-items: center;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+input[type="radio"] {
+  margin-right: 0.5rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+label {
+  cursor: pointer;
+}
+
+/* Graph Container */
+.graph-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.graph-section {
+  flex: 1 1 300px;
+  min-width: 0; 
+}
+
+.graph-visual, .mst-visual {
+  height: clamp(300px, 50vw, 500px); 
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 100%;
+}
+
+/* Explanation and Steps */
+.explanation {
+  background-color: #e9ecef;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.steps {
+  list-style-type: none;
+  padding: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  background-color: #fff;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.steps li {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s;
+  font-size: 0.95rem;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.steps li:last-child {
+  border-bottom: none;
+}
+
+.steps li.selected {
+  background-color: #e3f2fd;
+  font-weight: bold;
+}
+
+/* Small screens (mobile phones) */
+@media (max-width: 576px) {
+  .container {
+    padding: 0.75rem;
+  }
+  
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .controls label, 
+  .controls button {
+    width: 100%;
+    max-width: none;
+  }
+  
+  .controls label {
+    font-size: 0.9rem;
+  }
+  
+  .controls button {
+    white-space: normal;
+    height: auto;
+    min-height: 44px;
+    padding: 0.5rem;
+  }
+  
+  form {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .graph-container {
+    flex-direction: column;
+  }
+  
+  .graph-section {
+    flex-basis: 100%;
+  }
+  
+  .graph-visual, .mst-visual {
+    height: 300px; 
+  }
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 577px) and (max-width: 991px) {
+  .controls {
+    justify-content: space-between;
+  }
+  
+  .controls label {
+    flex-basis: calc(50% - 0.5rem);
+    font-size: 0.95rem;
+  }
+  
+  .controls button {
+    flex-basis: calc(50% - 0.5rem);
+  }
+}
+
+/* For all touchscreens */
+@media (hover: none) {
+  .controls button,
+  input[type="radio"],
+  label {
+    padding: 0.75rem;
+  }
+  
+  input[type="radio"] {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Ensure SVG/Canvas is responsive */
+app-graph-canvas-wrapper {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Fix for long text in labels */
+@media (max-width: 400px) {
+  .controls label {
+    font-size: 0.85rem;
+  }
+  
+  form label {
+    font-size: 0.85rem;
+  }
+  
+  .explanation, .steps li {
+    font-size: 0.9rem;
+  }
+}

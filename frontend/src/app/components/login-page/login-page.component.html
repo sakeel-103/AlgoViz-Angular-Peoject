@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AlgiViz</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script
+      async
+      defer
+      src="https://apis.google.com/js/platform.js"
+      type="text/javascript"
+    ></script>
+  </head>
+
+  <body>
+    <nav class="welcome-heading">
+      <div class="nav-left">
+        <p>ALGOVIZ</p>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+      <div class="nav-items">
+        <a class="nav-item" href="#">FAQ</a>
+        <a class="nav-item" href="#">Quiz</a>
+        <a class="nav-item" href="#">Practice Questions</a>
+        <a class="nav-item" href="#">Reviews</a>
+      </div>
+    </nav>
+
+    <!-- Form Contents Start -->
+    <div class="container">
+      <div class="box">
+        <div class="left">
+          <h2>Sign In</h2>
+          <form
+            id="loginForm"
+            (ngSubmit)="login(loginForm)"
+            #loginForm="ngForm"
+          >
+            <!-- Username Field -->
+            <div class="input-box">
+              <i
+                class="bx bx-envelope"
+                style="position: absolute; left: 340px; top: 50%; color: black"
+              ></i>
+              <input
+                type="email"
+                id="email"
+                placeholder="Email"
+                required
+                [(ngModel)]="email"
+                name="email"
+                aria-label="Enter your email"
+              />
+            </div>
+
+            <!-- Password Field with Toggle -->
+            <div class="input-box" style="position: relative">
+              <i class=""></i>
+              <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                required
+                [(ngModel)]="password"
+                name="password"
+                [type]="passwordVisible ? 'text' : 'password'"
+                aria-label="Enter your password"
+              />
+              <i
+                class="bx toggle-password"
+                [ngClass]="passwordVisible ? 'bx bx-show' : 'bx bx-hide'"
+                (click)="togglePasswordVisibility()"
+                aria-label="Toggle password visibility"
+                style="
+                  cursor: pointer;
+                  position: absolute;
+                  left: 340px;
+                  top: 50%;
+                  color: black;
+                  transform: translateY(-50%);
+                "
+              ></i>
+            </div>
+
+            <!-- Checkbox and Forgot Password -->
+            <div class="checkbox-container">
+              <input
+                type="checkbox"
+                id="remember"
+                name="remember"
+                class="styled-checkbox"
+              />
+              <label for="remember" class="checkbox-label">Remember Me</label>
+              <a
+                href="javascript:void(0)"
+                class="forgot-password"
+                (click)="openForgotPasswordModal()"
+              >
+                Forgot Password
+              </a>
+
+              <!-- Forgot Password Modal -->
+              <div *ngIf="showForgotPasswordModal" class="modal">
+                <div class="modal-content">
+                  <span class="close" (click)="closeForgotPasswordModal()"
+                    >×</span
+                  >
+                  <h3>Reset Password</h3>
+                  <form
+                    (ngSubmit)="resetPassword(resetForm)"
+                    #resetForm="ngForm"
+                  >
+                    <div class="input-box">
+                      <input
+                        type="email"
+                        placeholder="Enter your registered email"
+                        required
+                        [(ngModel)]="resetEmail"
+                        name="resetEmail"
+                      />
+                    </div>
+                    <div class="input-box">
+                      <input
+                        type="password"
+                        placeholder="Enter new password"
+                        required
+                        [(ngModel)]="newPassword"
+                        name="newPassword"
+                      />
+                    </div>
+                    <div class="input-box">
+                      <input
+                        type="password"
+                        placeholder="Confirm new password"
+                        required
+                        [(ngModel)]="confirmPassword"
+                        name="confirmPassword"
+                      />
+                    </div>
+                    <button type="submit" class="btn">Submit</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn">Sign In</button>
+          </form>
+        </div>
+        <div class="right">
+          <h1>Welcome to Login</h1>
+          <p>Don't have an account?</p>
+          <a routerLink="/signup" class="btn-outline"> Sign Up </a>
+        </div>
+      </div>
+    </div>
+    <script>
+      function toggleMenu() {
+        const navItems = document.querySelector(".nav-items");
+        navItems.classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>

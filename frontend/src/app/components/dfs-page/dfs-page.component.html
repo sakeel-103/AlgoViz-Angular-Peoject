@@ -1,0 +1,145 @@
+<app-navbar></app-navbar>
+<!-- Back Button at Top-Left -->
+<button
+  class="back-button"
+  (click)="goBack()"
+  aria-label="Go back to previous page"
+>
+  ←
+</button>
+
+<div class="container">
+  <h2>DFS Algorithm Visualizer</h2>
+
+  <div class="controls">
+    <label>
+      Number of Nodes (5-15):
+      <input
+        type="number"
+        [(ngModel)]="numNodes"
+        min="5"
+        max="15"
+        (change)="validateInputs()"
+      />
+    </label>
+
+    <label>
+      Start Node (0 to {{ numNodes - 1 }}):
+      <input
+        type="number"
+        [(ngModel)]="startNode"
+        [min]="0"
+        [max]="numNodes - 1"
+        (change)="validateInputs()"
+      />
+    </label>
+
+    <label>
+      Graph Type:
+      <select [(ngModel)]="graphType" (change)="validateInputs()">
+        <option value="undirected">Undirected</option>
+        <option value="directed">Directed</option>
+      </select>
+    </label>
+
+    <button (click)="generateGraph()" [disabled]="!isValid">
+      Generate Graph
+    </button>
+    <button (click)="handlePlayPause()" [disabled]="!graph.length">
+      {{ isPlaying ? "Pause" : "Play" }}
+    </button>
+  </div>
+
+  <div class="legend" *ngIf="graph.length > 0">
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #636161"></div>
+      <span>Default Node</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #ffd700"></div>
+      <span>Current Node</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #00ced1"></div>
+      <span>Top of Stack</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #4682b4"></div>
+      <span>In Stack</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #ff4500"></div>
+      <span>Processed</span>
+    </div>
+  </div>
+
+  <div class="graph-container">
+    <div class="graph-section">
+      <h3>Original Graph</h3>
+      <div class="graph-visual" [class.empty]="!graph.length">
+        <app-graph-canvas-wrapper
+          *ngIf="graph.length > 0"
+          [graph]="graph"
+          [selectedNode]="selectedNode"
+          [isDirected]="graphType === 'directed'"
+        >
+        </app-graph-canvas-wrapper>
+      </div>
+    </div>
+
+    <div class="graph-section">
+      <h3>DFS Traversal Tree</h3>
+      <div class="dfs-visual" [class.empty]="!graph.length">
+        <app-graph-canvas-wrapper
+          *ngIf="graph.length > 0"
+          [graph]="graph"
+          [dfsEdges]="dfsEdges"
+          [selectedNode]="selectedNode"
+          [stackNodes]="stack"
+          [processedNodes]="processed"
+          [processingNode]="processingNode"
+          [isDirected]="graphType === 'directed'"
+          [traversedEdges]="traversedEdges"
+        >
+        </app-graph-canvas-wrapper>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="explanation-container"
+    [class.empty]="!explanation || !graph.length"
+    *ngIf="graph.length > 0"
+  >
+    <h3>Current Step</h3>
+    <p class="explanation">{{ explanation }}</p>
+
+    <div class="step-counter">Step {{ currentStep }} of {{ steps.length }}</div>
+  </div>
+
+  <div
+    class="steps-container"
+    [class.empty]="!graph.length"
+    *ngIf="graph.length > 0"
+  >
+    <h3>DFS Steps</h3>
+    <ul class="steps">
+      <li
+        *ngFor="let step of steps; let i = index"
+        [class.selected]="i === currentStep - 1"
+      >
+        {{ step.explanation }}
+      </li>
+    </ul>
+  </div>
+
+  <div class="explanation-container empty" *ngIf="!graph.length">
+    <h3>Current Step</h3>
+    <p>Generate a graph to see DFS steps and explanations</p>
+  </div>
+
+  <div class="steps-container empty" *ngIf="!graph.length">
+    <h3>DFS Steps</h3>
+    <p>Generate a graph to see DFS algorithm steps</p>
+  </div>
+</div>

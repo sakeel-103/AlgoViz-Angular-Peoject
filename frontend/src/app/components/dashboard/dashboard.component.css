@@ -1,0 +1,839 @@
+/* Shared styles for consistency */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+input {
+  font-size: 14px;
+}
+
+button {
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #2f3b4c; 
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+  padding: 10px;
+  background-color: #ff4081;
+  display: flex;
+  margin-top: 20px;
+  justify-content: center; 
+  align-items: center;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  box-sizing: border-box;
+  width: 80%; 
+  margin-left: auto; 
+  margin-right: auto; 
+  text-align: center; 
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  gap: 10px; 
+  width: 100%;
+}
+
+.user-profile i {
+  font-size: 20px;
+  display: block; 
+}
+
+.user-profile span {
+  font-size: 20px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.sidebar-header i {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Navigation Menu */
+.sidebar-nav {
+  flex-grow: 1;
+  padding: 0;
+  padding-top: 15%;
+  list-style: none; 
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.nav-item:hover {
+  background-color: #3d4e61; 
+}
+
+.nav-item i {
+  font-size: 16px;
+  margin-right: 15px;
+}
+
+.nav-item span {
+  font-size: 14px;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  padding: 20px;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #fa6093; 
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #a04585; 
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%);
+  padding: 15px 30px;
+  margin: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.navbar:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.navbar h2 {
+  color: white;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to right, #ad4caf, #3d21f3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding: 0 20px;
+}
+
+/* Optional: Add a subtle shine animation */
+@keyframes shine {
+  0% { background-position: -500%; }
+  100% { background-position: 500%; }
+}
+
+.navbar h2 {
+  background-size: 200% auto;
+  animation: shine 8s linear infinite;
+}
+.content {
+  padding: 2rem;
+  height: calc(100vh - 80px); 
+  overflow-y: auto; 
+}
+
+.dashboard-options {
+  background: #ead4e5;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.dashboard-options p {
+  font-size: 1.7rem;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.dashboard-options p::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 3px;
+  background: linear-gradient(90deg, #4caf50, #2a2a3e);
+  border-radius: 3px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0,0,0,0.5) !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.modal-content {
+  background: white !important;
+  padding: 20px !important;
+  border-radius: 5px !important;
+  min-width: 300px !important;
+  z-index: 10000 !important;
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+.change-name-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.change-name-form input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.change-name-form button {
+  padding: 8px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.change-name-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Added styles for status message */
+.status-message {
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  display: none;
+}
+
+.status-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Disabled button state */
+.change-name-form button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  background-color: #45a049;
+}
+
+.delete-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+.status-message {
+  padding: 10px;
+  margin: 15px 0;
+  border-radius: 4px;
+  display: none;
+}
+
+.status-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.warning-message {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.warning-message i {
+  margin-right: 8px;
+}
+
+/* -------------  main body text ------------ */
+
+/* General styles for the main content */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #fff;
+  color: #333;
+}
+
+/* Styling for the algorithm visualization section */
+.algorithm-visualization-section {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9e6f4; /* Light pink background to match the welcome box */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading style */
+.algorithm-visualization-section h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+/* Visualization controls container */
+.visualization-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+/* Label styles */
+.visualization-controls label {
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Input and select styles */
+.visualization-controls select,
+.visualization-controls input[type="text"],
+.visualization-controls input[type="number"] {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+/* Button styles */
+.run-btn,
+.reset-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  width: 150px;
+  margin-top: 10px;
+}
+
+.run-btn {
+  background-color: #ff69b4; /* Pink to match the theme */
+  color: white;
+}
+
+.run-btn:hover {
+  background-color: #ff1493;
+}
+
+.reset-btn {
+  background-color: #ccc;
+  color: #333;
+}
+
+.reset-btn:hover {
+  background-color: #bbb;
+}
+
+/* Visualization status styles */
+.visualization-status {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border-left: 4px solid #ff69b4;
+  border-radius: 5px;
+}
+
+.visualization-status p {
+  margin: 5px 0;
+  font-size: 0.95em;
+}
+
+.visualization-status strong,
+.visualization-status em {
+  color: #ff69b4;
+}
+
+/* Ensure layout adjusts with sidebar */
+@media (min-width: 768px) {
+  .visualization-controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .visualization-controls > * {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .run-btn,
+  .reset-btn {
+    margin-top: 0;
+  }
+}
+
+/* Adjust for smaller screens */
+@media (max-width: 767px) {
+  .main-content {
+    padding: 10px;
+  }
+
+  .algorithm-visualization-section {
+    padding: 10px;
+  }
+}
+
+/* Additional Responsive Styles for Sidebar Dropdown */
+
+/* Sidebar toggle button */
+.sidebar-toggle {
+  display: none;
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  width: calc(100% - 20px);
+  text-align: left;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.sidebar-toggle:hover {
+  background-color: #fa6093;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .dashboard-container {
+    flex-direction: column;
+    position: relative;
+  }
+
+  .sidebar {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    max-width: 250px;
+    z-index: 1001;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .sidebar-toggle {
+    display: block;
+  }
+
+  .main-content {
+    padding: 15px;
+  }
+
+  .navbar {
+    padding: 10px 15px;
+  }
+
+  .navbar h2 {
+    font-size: 1.5rem;
+    left: 0;
+    transform: none;
+    text-align: center;
+    width: 100%;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .dashboard-options {
+    padding: 1.5rem;
+  }
+
+  .dashboard-options p {
+    font-size: 1.4rem;
+  }
+
+  .algorithm-visualization-section {
+    padding: 15px;
+  }
+
+  .visualization-controls select,
+  .visualization-controls input[type="text"],
+  .visualization-controls input[type="number"] {
+    max-width: 250px;
+  }
+
+  .run-btn,
+  .reset-btn {
+    width: 120px;
+  }
+
+  .modal-content {
+    width: 80%;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 767px) {
+  .sidebar-nav {
+    padding-top: 10px;
+  }
+
+  .nav-item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #3d4e61;
+  }
+
+  .sidebar-footer {
+    padding: 15px;
+  }
+
+  .logout-btn {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .main-content {
+    padding: 10px;
+  }
+
+  .content {
+    padding: 0.5rem;
+    height: calc(100vh - 60px);
+  }
+
+  .dashboard-options {
+    padding: 1rem;
+  }
+
+  .dashboard-options p {
+    font-size: 1.2rem;
+  }
+
+  .visualization-controls {
+    gap: 10px;
+  }
+
+  .visualization-controls select,
+  .visualization-controls input[type="text"],
+  .visualization-controls input[type="number"] {
+    max-width: 100%;
+  }
+
+  .run-btn,
+  .reset-btn {
+    width: 100%;
+    max-width: 150px;
+  }
+
+  .visualization-status p {
+    font-size: 0.85em;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .form-group input {
+    font-size: 14px;
+  }
+
+  .submit-btn,
+  .delete-btn {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .sidebar-toggle {
+    display: none;
+  }
+
+  .main-content {
+    padding: 30px;
+  }
+
+  .navbar h2 {
+    font-size: 2.2rem;
+  }
+
+  .dashboard-options {
+    padding: 2.5rem;
+  }
+
+  .dashboard-options p {
+    font-size: 1.8rem;
+  }
+
+  .algorithm-visualization-section {
+    padding: 25px;
+  }
+
+  .visualization-controls select,
+  .visualization-controls input[type="text"],
+  .visualization-controls input[type="number"] {
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 8px 10px;
+  }
+
+  .navbar h2 {
+    font-size: 1rem;
+  }
+
+  .dashboard-options p {
+    font-size: 1rem;
+  }
+
+  .algorithm-visualization-section h3 {
+    font-size: 1.2em;
+  }
+
+  .visualization-controls label {
+    font-size: 0.9em;
+  }
+
+  .visualization-controls select,
+  .visualization-controls input[type="text"],
+  .visualization-controls input[type="number"] {
+    padding: 6px;
+    font-size: 0.9em;
+  }
+
+  .run-btn,
+  .reset-btn {
+    padding: 8px 12px;
+    font-size: 0.9em;
+  }
+
+  .modal-content {
+    padding: 10px;
+    width: 95%;
+  }
+
+  .form-group label {
+    font-size: 0.9em;
+  }
+
+  .form-group input {
+    padding: 8px;
+    font-size: 0.9em;
+  }
+
+  .submit-btn,
+  .delete-btn {
+    padding: 8px;
+    font-size: 0.9em;
+  }
+}

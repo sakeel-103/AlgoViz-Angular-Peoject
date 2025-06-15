@@ -1,0 +1,81 @@
+<app-navbar></app-navbar>
+
+<!-- Back Button at Top-Left -->
+<button
+  class="back-button"
+  (click)="goBack()"
+  aria-label="Go back to previous page"
+>
+  ←
+</button>
+<div class="question-bank-container">
+  <div class="sidebar">
+    <!-- Filter List for Desktop/Tablet -->
+    <div class="filter-list" *ngIf="!isMobile">
+      <h3>Filter by Difficulty</h3>
+      <ul>
+        <li
+          *ngFor="let level of ['Easy', 'Medium', 'Hard', 'All']"
+          (click)="setCategory(level === 'All' ? '' : level)"
+          [class.active]="selectedCategory === (level === 'All' ? '' : level)"
+        >
+          {{ level }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Filter Dropdown for Mobile -->
+    <div class="filter-dropdown" *ngIf="isMobile">
+      <h3>Filter by Difficulty</h3>
+      <select
+        [(ngModel)]="selectedCategory"
+        (change)="setCategory(selectedCategory)"
+        class="difficulty-select"
+      >
+        <option value="">All</option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="content">
+    <header class="header">
+      <h1 class="title">Practice Your Skills</h1>
+      <p class="intro">
+        Sharpen your coding skills with hundreds of algorithm problems to
+        practice.
+      </p>
+    </header>
+
+    <div class="search-container">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="filterQuestions()"
+        placeholder="Search problems..."
+        class="search-input"
+        aria-label="Search for algorithm problems"
+      />
+    </div>
+
+    <div *ngIf="isLoading" class="loading-indicator">
+      Loading questions, please wait...
+    </div>
+
+    <div class="question-grid" *ngIf="!isLoading">
+      <div *ngFor="let question of filteredQuestions" class="question-card">
+        <h2 class="question-title">{{ question.title }}</h2>
+        <p class="question-description">{{ question.description }}</p>
+        <a
+          [href]="question.link"
+          class="start-solving-button"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Start Solving</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
