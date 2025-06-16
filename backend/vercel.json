@@ -13,10 +13,11 @@
     },
     {
       "src": "/(.*)",
-      "dest": "server.js"
+      "status": 404,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "dest": "/api/404"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }

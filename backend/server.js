@@ -6,35 +6,30 @@ const dotenv = require('dotenv');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
-const MongoStore = require('connect-mongo'); // Added for MongoDB session store
+const MongoStore = require('connect-mongo');
 const multer = require('multer');
 const fs = require('fs');
 const User = require('./models/User');
 const Feedback = require('./models/Feedback');
 const { validateSignup } = require('./middlewares/validation');
 const http = require('http');
-// const { Server } = require('socket.io'); // Commented out for Vercel deployment
 const Review = require('./models/Review');
 const Contact = require('./models/contact');
 dotenv.config();
 
 const app = express();
-// const server = http.createServer(app); // Commented out for Vercel deployment
-// const io = new Server(server); // Commented out for Vercel deployment
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
 // ==================== SERVER STARTUP ====================
-// Start server only when running directly (not when imported)
 if (require.main === module) {
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => { // Use app.listen instead of server.listen for local testing
+    app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
     });
 
-    // Graceful shutdown
     process.on('SIGINT', async () => {
         console.log('Shutting down gracefully...');
         await mongoose.connection.close();
@@ -42,7 +37,6 @@ if (require.main === module) {
     });
 }
 
-// Export for Vercel
 module.exports = app;
 // ==================== END OF VERCEL CONFIG ====================
 
@@ -51,9 +45,14 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'defaultSecret',
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({ // Use MongoDB for session storage
+    store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI,
-        collectionName: 'sessions'
+        collectionName: 'sessions',
+        // Add connection options for reliability
+        mongoOptions: {
+            maxPoolSize: 10,
+            serverSelectionTimeoutMS: 5000
+        }
     }),
     cookie: {
         secure: process.env.NODE_ENV === 'production',
@@ -64,30 +63,18 @@ app.use(session({
 
 // ======================== MongoDB connection Started =====================
 mongoose.connect(process.env.MONGODB_URI, {
-    maxPoolSize: 10, // Limit connection pool size for serverless
-    serverSelectionTimeoutMS: 5000 // Timeout for server selection
+    maxPoolSize: 10,
+    serverSelectionTimeoutMS: 5000
 })
     .then(() => console.log('MongoDB connected'))
     .catch(err => {
         console.error('MongoDB connection error:', err);
-        process.exit(1); // Exit if connection fails to prevent crashes
+        process.exit(1);
     });
-const upload = multer({ dest: 'uploads/' });
 
-// ============== Socket.io connection used here handling for real-time updates =============
-// Note: Socket.IO is commented out as it’s not supported in Vercel’s serverless environment.
-// To use Socket.IO, deploy this part on a WebSocket-compatible platform (e.g., Heroku, AWS).
-/*
-io.on('connection', (socket) => {
-    console.log('A user connected');
-    socket.on('updateGraph', (data) => {
-        socket.broadcast.emit('graphUpdated', data);
-    });
-    socket.on('disconnect', () => {
-        console.log('A user disconnected');
-    });
-});
-*/
+// Use in-memory storage for multer to avoid file system writes on Vercel
+const upload = multer({ storage: multer.memoryStorage() });
+const reviewUpload = multer({ storage: multer.memoryStorage() });
 
 // ============== Signup route with improved validation ============
 app.post('/api/signup', async (req, res) => {
@@ -113,8 +100,7 @@ app.post('/api/signup', async (req, res) => {
         if (existingUser) {
             return res.status(409).json({ message: 'Email already exists' });
         }
-        // Create new user without manual password hashing
-        const newUser = new User({ username, email, password }); // Let pre('save') hook handle hashing
+        const newUser = new User({ username, email, password });
         await newUser.save();
         res.status(201).json({
             message: 'User registered successfully',
@@ -156,7 +142,6 @@ app.post('/api/login', async (req, res) => {
             });
         }
 
-        // Use the comparePassword method from the User model
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
             return res.status(401).json({
@@ -165,10 +150,8 @@ app.post('/api/login', async (req, res) => {
             });
         }
 
-        // Generate token
         const token = user.generateAuthToken();
 
-        // Return user data without password
         const userData = {
             _id: user._id,
             username: user.username,
@@ -300,7 +283,6 @@ app.use((err, req, res, next) => {
 });
 
 // ====================== Review Page =============================================
-const reviewUpload = multer({ dest: 'uploads/reviews/' });
 app.get('/api/reviews', async (req, res) => {
     try {
         const reviews = await Review.find().sort({ createdAt: -1 });
@@ -343,7 +325,7 @@ app.post('/api/reviews/:reviewId/questions', reviewUpload.single('file'), async 
         const newQuestion = {
             author,
             content,
-            filePath: req.file ? req.file.path : null
+            filePath: req.file ? req.file.buffer.toString('base64') : null // Store file as base64 in DB
         };
         review.questions.push(newQuestion);
         await review.save();
@@ -420,7 +402,6 @@ app.put('/api/update-name', verifyToken, async (req, res) => {
             });
         }
 
-        // Check if username is already taken
         const existingUser = await User.findOne({ username: newName });
         if (existingUser && existingUser._id.toString() !== req.user._id.toString()) {
             return res.status(409).json({
@@ -467,7 +448,6 @@ app.put('/api/change-password', verifyToken, async (req, res) => {
             });
         }
 
-        // Verify current password
         const isMatch = await bcrypt.compare(currentPassword, req.user.password);
         if (!isMatch) {
             return res.status(401).json({
@@ -476,7 +456,6 @@ app.put('/api/change-password', verifyToken, async (req, res) => {
             });
         }
 
-        // Update password (pre-save hook in model will hash it)
         req.user.password = newPassword;
         await req.user.save();
 
@@ -507,7 +486,6 @@ app.delete('/api/delete-account', verifyToken, async (req, res) => {
             });
         }
 
-        // Verify password
         const isMatch = await bcrypt.compare(password, req.user.password);
         if (!isMatch) {
             return res.status(401).json({
