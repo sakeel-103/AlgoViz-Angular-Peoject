@@ -6,20 +6,21 @@ const dotenv = require('dotenv');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+const MongoStore = require('connect-mongo'); // Added for MongoDB session store
 const multer = require('multer');
 const fs = require('fs');
 const User = require('./models/User');
 const Feedback = require('./models/Feedback');
 const { validateSignup } = require('./middlewares/validation');
 const http = require('http');
-const { Server } = require('socket.io');
+// const { Server } = require('socket.io'); // Commented out for Vercel deployment
 const Review = require('./models/Review');
 const Contact = require('./models/contact');
 dotenv.config();
 
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
+// const server = http.createServer(app); // Commented out for Vercel deployment
+// const io = new Server(server); // Commented out for Vercel deployment
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -29,7 +30,7 @@ app.use(express.static(__dirname));
 // Start server only when running directly (not when imported)
 if (require.main === module) {
     const PORT = process.env.PORT || 5000;
-    server.listen(PORT, () => {
+    app.listen(PORT, () => { // Use app.listen instead of server.listen for local testing
         console.log(`Server running on port ${PORT}`);
     });
 
@@ -45,13 +46,15 @@ if (require.main === module) {
 module.exports = app;
 // ==================== END OF VERCEL CONFIG ====================
 
-
-
 // ================== Session middleware setup ===================
 app.use(session({
     secret: process.env.SESSION_SECRET || 'defaultSecret',
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({ // Use MongoDB for session storage
+        mongoUrl: process.env.MONGODB_URI,
+        collectionName: 'sessions'
+    }),
     cookie: {
         secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
@@ -59,43 +62,22 @@ app.use(session({
     }
 }));
 
-// ========================This is MongoDB connection Started =====================
-mongoose.connect(process.env.MONGODB_URI)
+// ======================== MongoDB connection Started =====================
+mongoose.connect(process.env.MONGODB_URI, {
+    maxPoolSize: 10, // Limit connection pool size for serverless
+    serverSelectionTimeoutMS: 5000 // Timeout for server selection
+})
     .then(() => console.log('MongoDB connected'))
-    .catch(err => console.error('MongoDB connection error:', err));
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+        process.exit(1); // Exit if connection fails to prevent crashes
+    });
 const upload = multer({ dest: 'uploads/' });
 
-app.post('/api/contact', async (req, res) => {
-    try {
-        if (mongoose.connection.readyState !== 1) {
-            console.error('MongoDB not connected! Current state:', mongoose.connection.readyState);
-            throw new Error('Database not connected');
-        }
-        const contact = new Contact({
-            email: req.body.email,
-            question: req.body.question,
-            feedback: req.body.feedback || '',
-            suggestion: req.body.suggestion || ''
-        });
-        const savedContact = await contact.save();
-        const exists = await Contact.exists({ _id: savedContact._id });
-        if (!exists) throw new Error('Document not found after save!');
-        res.status(201).json({ success: true, data: savedContact });
-
-    } catch (error) {
-        console.error('Save failed:', error.message);
-        res.status(500).json({
-            success: false,
-            error: error.message,
-            dbState: mongoose.connection.readyState,
-            dbName: mongoose.connection.name
-        });
-    }
-});
-// ======================================================
-
-
-// ==============  Socket.io connection used here handling for real-time updates =============
+// ============== Socket.io connection used here handling for real-time updates =============
+// Note: Socket.IO is commented out as it’s not supported in Vercel’s serverless environment.
+// To use Socket.IO, deploy this part on a WebSocket-compatible platform (e.g., Heroku, AWS).
+/*
 io.on('connection', (socket) => {
     console.log('A user connected');
     socket.on('updateGraph', (data) => {
@@ -105,6 +87,7 @@ io.on('connection', (socket) => {
         console.log('A user disconnected');
     });
 });
+*/
 
 // ============== Signup route with improved validation ============
 app.post('/api/signup', async (req, res) => {
@@ -146,7 +129,7 @@ app.post('/api/signup', async (req, res) => {
     }
 });
 
-// ==============  Login route with improved validation ============
+// ============== Login route with improved validation ============
 app.post('/api/login', async (req, res) => {
     const { email, username, password } = req.body;
     const loginIdentifier = email || username;
@@ -209,12 +192,15 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-// ===================  Contact form ========================
-
+// =================== Contact form ========================
 app.post('/api/contact', async (req, res) => {
     console.log('Raw incoming data:', req.body);
 
     try {
+        if (mongoose.connection.readyState !== 1) {
+            console.error('MongoDB not connected! Current state:', mongoose.connection.readyState);
+            throw new Error('Database not connected');
+        }
         const { email, question, feedback = '', suggestion = '' } = req.body;
         if (!email || !question) {
             console.log('Validation failed - missing fields');
@@ -230,8 +216,10 @@ app.post('/api/contact', async (req, res) => {
             suggestion
         });
         const savedContact = await newContact.save();
+        const exists = await Contact.exists({ _id: savedContact._id });
+        if (!exists) throw new Error('Document not found after save!');
         console.log('Successfully saved to DB:', savedContact);
-        return res.status(201).json({
+        res.status(201).json({
             success: true,
             data: savedContact
         });
@@ -245,49 +233,17 @@ app.post('/api/contact', async (req, res) => {
                 errors: error.errors
             });
         }
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: 'Server error',
-            error: error.message
+            error: error.message,
+            dbState: mongoose.connection.readyState,
+            dbName: mongoose.connection.name
         });
     }
 });
 
-// ============  Get all feedback ================
-app.post('/api/contact', async (req, res) => {
-    try {
-        const { email, question, feedback, suggestion } = req.body;
-        if (!email || !question) {
-            return res.status(400).json({ message: 'Email and question are required' });
-        }
-        const newContact = new Contact({
-            email,
-            question,
-            feedback: feedback || '',
-            suggestion: suggestion || ''
-        });
-        const savedContact = await newContact.save();
-        console.log('Contact saved to DB:', savedContact);
-        res.status(201).json({
-            message: 'Contact form submitted successfully',
-            data: savedContact
-        });
-    } catch (error) {
-        console.error('Contact save error:', error);
-        if (error.name === 'ValidationError') {
-            return res.status(400).json({
-                message: 'Validation error',
-                errors: error.errors
-            });
-        }
-        res.status(500).json({
-            message: 'Failed to save contact form',
-            error: error.message
-        });
-    }
-});
-
-// ==============  Add new feedback ================
+// ============== Add new feedback ================
 app.post('/api/feedback', async (req, res) => {
     const { author, content } = req.body;
     if (!author || !content) {
@@ -304,8 +260,7 @@ app.post('/api/feedback', async (req, res) => {
     }
 });
 
-// ==========  Update the feedback form in every steps if user wants ================
-
+// ========== Update the feedback form in every steps if user wants ================
 app.put('/api/feedback/:id', async (req, res) => {
     const { content } = req.body;
     try {
@@ -325,7 +280,6 @@ app.put('/api/feedback/:id', async (req, res) => {
 });
 
 // =========== Delete the feedback ==========================
-
 app.delete('/api/feedback/:id', async (req, res) => {
     try {
         const deletedFeedback = await Feedback.findByIdAndDelete(req.params.id);
@@ -340,14 +294,12 @@ app.delete('/api/feedback/:id', async (req, res) => {
 });
 
 // ===================== Global error handler ===============================
-
 app.use((err, req, res, next) => {
     console.error('Unhandled error:', err);
     res.status(500).json({ message: 'Server error' });
 });
 
-// ======================Review Page =============================================
-
+// ====================== Review Page =============================================
 const reviewUpload = multer({ dest: 'uploads/reviews/' });
 app.get('/api/reviews', async (req, res) => {
     try {
@@ -359,7 +311,7 @@ app.get('/api/reviews', async (req, res) => {
     }
 });
 
-// here is Create new review
+// Here is Create new review
 app.post('/api/reviews', async (req, res) => {
     const { author, content } = req.body;
 
@@ -376,8 +328,7 @@ app.post('/api/reviews', async (req, res) => {
     }
 });
 
-//  ============= Add question to review ==============
-
+// ============= Add question to review ==============
 app.post('/api/reviews/:reviewId/questions', reviewUpload.single('file'), async (req, res) => {
     const { author, content } = req.body;
     const { reviewId } = req.params;
@@ -403,8 +354,7 @@ app.post('/api/reviews/:reviewId/questions', reviewUpload.single('file'), async 
     }
 });
 
-//  ==================Add reply to questions ===========
-
+// ================== Add reply to questions ===========
 app.post('/api/reviews/:reviewId/questions/:questionId/replies', async (req, res) => {
     const { author, content } = req.body;
     const { reviewId, questionId } = req.params;
