@@ -1,7 +1,7 @@
 // development Environment
 export const environment = {
   production: false,
-  BACKEND_API_URL: 'https://algo-viz-angular-peoject.vercel.app/api',
+  BACKEND_API_URL: 'https://algo-viz-angular-peoject.vercel.app/',
   YOUTUBE_API_KEY: 'AIzaSyBBnYSy5EKllIfdYEcL7WPdJuXkmCf7iCQ',
   CLIENT_ID: 'test',
 };
