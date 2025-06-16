@@ -23,6 +23,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
+// Add root route to handle GET requests to "/"
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'Backend server is running!' });
+});
+
 // ==================== SERVER STARTUP ====================
 if (require.main === module) {
     const PORT = process.env.PORT || 5000;
@@ -48,7 +53,6 @@ app.use(session({
     store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI,
         collectionName: 'sessions',
-        // Add connection options for reliability
         mongoOptions: {
             maxPoolSize: 10,
             serverSelectionTimeoutMS: 5000
