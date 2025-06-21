@@ -194,6 +194,105 @@
     font-size: 20px;
     color: #333;
   }
+
+  /* Responsive Styles */
+  @media (max-width: 1024px) {
+    .quiz-layout {
+      margin-left: 180px;
+    }
+    .sidebar {
+      width: 180px;
+      padding: 15px;
+    }
+    .quiz-content {
+      max-width: 600px;
+      padding: 20px;
+    }
+    .quiz-content h1 {
+      font-size: 28px;
+    }
+    .question-text {
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .quiz-layout {
+      flex-direction: column;
+      margin-left: 0;
+      padding: 10px;
+    }
+    .sidebar {
+      position: relative;
+      width: 100%;
+      height: auto;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .quiz-content {
+      margin-top: 20px;
+      max-width: 100%;
+      padding: 15px;
+    }
+    .sidebar ul {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+    .sidebar ul li {
+      min-width: 100px;
+      margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .quiz-content h1 {
+      font-size: 24px;
+    }
+    .question-text {
+      font-size: 16px;
+    }
+    .options button {
+      padding: 12px;
+      font-size: 14px;
+    }
+    .submit-btn {
+      padding: 10px;
+      font-size: 16px;
+    }
+    .results-section h2 {
+      font-size: 24px;
+    }
+    .restart-btn {
+      padding: 12px 24px;
+      font-size: 16px;
+    }
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+    .sidebar ul li {
+      padding: 8px;
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .quiz-content h1 {
+      font-size: 22px;
+    }
+    .question-text {
+      font-size: 15px;
+    }
+    .options button {
+      padding: 10px;
+    }
+    .sidebar ul li {
+      min-width: 80px;
+      font-size: 13px;
+    }
+  }
 </style>
 
 <div class="quiz-layout">

@@ -182,21 +182,21 @@ export class GraphCanvasWrapperComponent implements OnChanges, AfterViewInit {
       ctx.beginPath();
       ctx.arc(positions[i].x, positions[i].y, radius, 0, 2 * Math.PI);
       if (this.processingNode === i && this.stackNodes !== null) {
-        ctx.fillStyle = '#ffd700'; // Current processing node (yellow)
+        ctx.fillStyle = '#ffd700';
       } else if (
         this.stackNodes &&
         this.stackNodes.includes(i) &&
         this.stackNodes !== null
       ) {
-        ctx.fillStyle = '#4682b4'; // Nodes in stack (blue)
+        ctx.fillStyle = '#4682b4';
       } else if (
         this.processedNodes &&
         this.processedNodes.includes(i) &&
         this.processedNodes !== null
       ) {
-        ctx.fillStyle = '#ff4500'; // Processed nodes (orange-red)
+        ctx.fillStyle = '#ff4500';
       } else {
-        ctx.fillStyle = '#f7f1f1'; // Default node color
+        ctx.fillStyle = '#f7f1f1';
       }
 
       ctx.fill();

@@ -1,7 +1,7 @@
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginPageComponent } from './components/login-page/login-page.component';
-import { SignupComponent } from './components/signup-page/signup-page.component';
+// import { LoginPageComponent } from './components/login-page/login-page.component';
+// import { SignupComponent } from './components/signup-page/signup-page.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AboutUsComponent } from './components/aboutUs-page/aboutUs.component';
 import { MainIndexComponent } from './components/main-index/main-index.component';
@@ -22,18 +22,18 @@ import { WarshallAlgoComponent } from './components/warshall-algo/warshall-algo.
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 export const routes: Routes = [
+  // {
+  //   path: '',
+  //   component: LoginPageComponent,
+  // },
   {
     path: '',
-    component: LoginPageComponent,
-  },
-  {
-    path: 'header',
     component: HeaderComponent,
   },
-  {
-    path: 'signup',
-    component: SignupComponent,
-  },
+  // {
+  //   path: 'signup',
+  //   component: SignupComponent,
+  // },
   {
     path: 'aboutUs',
     component: AboutUsComponent,
